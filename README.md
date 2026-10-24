@@ -62,27 +62,27 @@ The current version (`v2.4.0`) is a **frontend-only, client-side demonstration**
 ## Project Screenshots
 
 > [!NOTE]
-> Screenshot assets are located in [`public/screenshots/`](public/screenshots/). When captured and placed into this directory, GitHub renders them directly in the gallery below.
+> High-resolution screenshots captured directly from the live application running in demonstration mode. All visuals use institutional demo datasets; no real student PII, credentials, or live secrets are exposed.
 
 | View / Portal | Screenshot Preview | Description & Key Highlights |
 | :--- | :---: | :--- |
-| **Authentication & Role Selection** | ![Login Portal](public/screenshots/login.png)<br><sub>*File: `public/screenshots/login.png`*</sub> | **Multi-Role Authentication Gateway**<br>Institutional login page with SJCEM and ALDEL Trust branding, dedicated role selector tabs (Student, Faculty, Administrator), and 2-step simulated OTP verification. |
-| **Student Dashboard** | ![Student Dashboard](public/screenshots/student-dashboard.png)<br><sub>*File: `public/screenshots/student-dashboard.png`*</sub> | **Academic Overview & Attendance Tracker**<br>Personalised student home screen highlighting aggregate attendance metrics, today's lecture schedule, recent announcements, and quick access to study resources. |
-| **Faculty Dashboard** | ![Faculty Dashboard](public/screenshots/faculty-dashboard.png)<br><sub>*File: `public/screenshots/faculty-dashboard.png`*</sub> | **Instructional Hub & Class Management**<br>Teaching interface showcasing allocated division courses, rapid attendance recording, student progress analytics, and project submission evaluations. |
-| **Administrator Dashboard** | ![Administrator Dashboard](public/screenshots/admin-dashboard.png)<br><sub>*File: `public/screenshots/admin-dashboard.png`*</sub> | **Institutional Administration & Governance**<br>System-wide administrative console showing real-time security audit events, QR identity token verification status, certificate approvals, and notice broadcasts. |
+| **Authentication & Role Selection** | ![Login Portal](public/screenshots/login.png)<br><sub>*File: `public/screenshots/login.png`*</sub> | **Multi-Role Authentication Gateway**<br>Institutional login page with SJCEM and ALDEL Trust branding, dedicated role selector tabs (Student, Faculty, Administrator), and 2-step simulated OTP verification modal. |
+| **Student Dashboard** | ![Student Dashboard](public/screenshots/student-dashboard.png)<br><sub>*File: `public/screenshots/student-dashboard.png`*</sub> | **Personalised Academic Cockpit**<br>Student home screen highlighting aggregate attendance metrics (84.8%), today's lecture schedule, IA score averages, pending certificate requests, unread notices, and quick action links. |
+| **Academic Analytics & Trends** | ![Student Academic Analytics](public/screenshots/student-analytics.png)<br><sub>*File: `public/screenshots/student-analytics.png`*</sub> | **Performance & Attendance Analytics**<br>Interactive Chart.js visualizations tracking course attendance percentages against the 75% Mumbai University norm, SGPA progression across semesters (CGPA 8.58), and internal assessment comparisons. |
+| **AI Student Campus Assistant** | ![AI Campus Assistant](public/screenshots/ai-assistant.png)<br><sub>*File: `public/screenshots/ai-assistant.png`*</sub> | **Interactive Academic Copilot**<br>Institutional conversational assistant grounded in authenticated student records, providing instant responses for subject attendance rates, daily lecture schedules, circulars, and certificate workflows with suggested prompt chips. |
+| **Faculty Academic Workspace** | ![Faculty Dashboard](public/screenshots/faculty-dashboard.png)<br><sub>*File: `public/screenshots/faculty-dashboard.png`*</sub> | **Instructional Hub & Class Management**<br>Teaching workspace with cryptographic faculty ID card and QR pass, assigned semester batches, one-click lecture attendance recording, and capstone project mentoring reviews. |
+| **Administrator Console** | ![Administrator Dashboard](public/screenshots/admin-dashboard.png)<br><sub>*File: `public/screenshots/admin-dashboard.png`*</sub> | **Institutional Administration & Governance**<br>Governance console with system-wide student/faculty statistics, real-time security audit trails, QR identity token verification status, and student certificate approval queue. |
 
 <details>
-<summary>📸 <strong>Screenshot Capture Guide for Maintainers</strong></summary>
+<summary>📸 <strong>Screenshot Reference & File Inventory</strong></summary>
 
-To capture and update these screenshots for the repository:
-1. Launch the application locally (`npm run dev` or `python -m http.server 5173`).
-2. Recommended browser resolution: **1280×800** or **1920×1080** (16:10 or 16:9 aspect ratio).
-3. Save each screenshot directly to `public/screenshots/` with the exact filenames:
-   - `public/screenshots/login.png` — Landing page at `http://localhost:5173/`
-   - `public/screenshots/student-dashboard.png` — Student portal (`rahul.sharma@sjcem.edu.in`)
-   - `public/screenshots/faculty-dashboard.png` — Faculty portal (`anita.deshmukh@sjcem.edu.in`)
-   - `public/screenshots/admin-dashboard.png` — Administrator console (`admin@sjcem.edu.in`)
-4. Ensure no real passwords, live API tokens, or confidential student PII are exposed in captured visuals.
+All screenshot assets are stored locally under [`public/screenshots/`](public/screenshots/):
+- [`public/screenshots/login.png`](public/screenshots/login.png) — Role-selection authentication portal (`/`)
+- [`public/screenshots/student-dashboard.png`](public/screenshots/student-dashboard.png) — Student academic cockpit (`rahul.sharma@sjcem.edu.in`)
+- [`public/screenshots/student-analytics.png`](public/screenshots/student-analytics.png) — Student academic analytics & trends view
+- [`public/screenshots/ai-assistant.png`](public/screenshots/ai-assistant.png) — SJCEM Campus AI Assistant conversational copilot
+- [`public/screenshots/faculty-dashboard.png`](public/screenshots/faculty-dashboard.png) — Faculty workspace & cryptographic ID pass (`anita.deshmukh@sjcem.edu.in`)
+- [`public/screenshots/admin-dashboard.png`](public/screenshots/admin-dashboard.png) — Institutional administration console (`admin@sjcem.edu.in`)
 </details>
 
 ---
