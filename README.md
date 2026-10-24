@@ -1,4 +1,4 @@
-﻿# SJCEM NEXT — Student Management Information System
+# SJCEM NEXT — Student Management Information System
 
 > **St. John College of Engineering and Management (SJCEM), Palghar, Maharashtra, India**
 > Under the management of **ALDEL Education Trust**
@@ -10,22 +10,23 @@
 
 1. [Overview](#overview)
 2. [Project Highlights](#project-highlights)
-3. [Features](#features)
-4. [Technology Stack](#technology-stack)
-5. [System Architecture](#system-architecture)
-6. [Project Structure](#project-structure)
-7. [Prerequisites](#prerequisites)
-8. [Installation & Local Setup](#installation--local-setup)
-9. [Running the Application](#running-the-application)
-10. [Demo Accounts](#demo-accounts)
-11. [Database Setup (Supabase)](#database-setup-supabase)
-12. [Security & Privacy](#security--privacy)
-13. [Deployment](#deployment)
-14. [Troubleshooting](#troubleshooting)
-15. [Roadmap](#roadmap)
-16. [Contributing](#contributing)
-17. [License](#license)
-18. [Acknowledgements & Disclaimer](#acknowledgements--disclaimer)
+3. [Project Screenshots](#project-screenshots)
+4. [Features](#features)
+5. [Technology Stack](#technology-stack)
+6. [System Architecture](#system-architecture)
+7. [Project Structure](#project-structure)
+8. [Prerequisites](#prerequisites)
+9. [Installation & Local Setup](#installation--local-setup)
+10. [Running the Application](#running-the-application)
+11. [Demo Accounts](#demo-accounts)
+12. [Database Setup (Supabase)](#database-setup-supabase)
+13. [Security & Privacy](#security--privacy)
+14. [Deployment](#deployment)
+15. [Troubleshooting](#troubleshooting)
+16. [Roadmap](#roadmap)
+17. [Contributing](#contributing)
+18. [License](#license)
+19. [Acknowledgements & Disclaimer](#acknowledgements--disclaimer)
 
 ---
 
@@ -55,6 +56,34 @@ The current version (`v2.4.0`) is a **frontend-only, client-side demonstration**
 - Mobile-first responsive design with a native-style bottom navigation bar, iOS safe-area insets, and touch-optimized inputs
 - Institutional branding matching SJCEM and ALDEL letterhead conventions
 - All data persisted client-side via `localStorage`; no user data is transmitted to any server in the current build
+
+---
+
+## Project Screenshots
+
+> [!NOTE]
+> Screenshot assets are located in [`public/screenshots/`](public/screenshots/). When captured and placed into this directory, GitHub renders them directly in the gallery below.
+
+| View / Portal | Screenshot Preview | Description & Key Highlights |
+| :--- | :---: | :--- |
+| **Authentication & Role Selection** | ![Login Portal](public/screenshots/login.png)<br><sub>*File: `public/screenshots/login.png`*</sub> | **Multi-Role Authentication Gateway**<br>Institutional login page with SJCEM and ALDEL Trust branding, dedicated role selector tabs (Student, Faculty, Administrator), and 2-step simulated OTP verification. |
+| **Student Dashboard** | ![Student Dashboard](public/screenshots/student-dashboard.png)<br><sub>*File: `public/screenshots/student-dashboard.png`*</sub> | **Academic Overview & Attendance Tracker**<br>Personalised student home screen highlighting aggregate attendance metrics, today's lecture schedule, recent announcements, and quick access to study resources. |
+| **Faculty Dashboard** | ![Faculty Dashboard](public/screenshots/faculty-dashboard.png)<br><sub>*File: `public/screenshots/faculty-dashboard.png`*</sub> | **Instructional Hub & Class Management**<br>Teaching interface showcasing allocated division courses, rapid attendance recording, student progress analytics, and project submission evaluations. |
+| **Administrator Dashboard** | ![Administrator Dashboard](public/screenshots/admin-dashboard.png)<br><sub>*File: `public/screenshots/admin-dashboard.png`*</sub> | **Institutional Administration & Governance**<br>System-wide administrative console showing real-time security audit events, QR identity token verification status, certificate approvals, and notice broadcasts. |
+
+<details>
+<summary>📸 <strong>Screenshot Capture Guide for Maintainers</strong></summary>
+
+To capture and update these screenshots for the repository:
+1. Launch the application locally (`npm run dev` or `python -m http.server 5173`).
+2. Recommended browser resolution: **1280×800** or **1920×1080** (16:10 or 16:9 aspect ratio).
+3. Save each screenshot directly to `public/screenshots/` with the exact filenames:
+   - `public/screenshots/login.png` — Landing page at `http://localhost:5173/`
+   - `public/screenshots/student-dashboard.png` — Student portal (`rahul.sharma@sjcem.edu.in`)
+   - `public/screenshots/faculty-dashboard.png` — Faculty portal (`anita.deshmukh@sjcem.edu.in`)
+   - `public/screenshots/admin-dashboard.png` — Administrator console (`admin@sjcem.edu.in`)
+4. Ensure no real passwords, live API tokens, or confidential student PII are exposed in captured visuals.
+</details>
 
 ---
 
