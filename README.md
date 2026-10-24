@@ -1,8 +1,17 @@
 # SJCEM NEXT — Student Management Information System
 
-> **St. John College of Engineering and Management (SJCEM), Palghar, Maharashtra, India**
-> Under the management of **ALDEL Education Trust**
-> Autonomous | NAAC ''A+'' Grade | NBA Accredited | Affiliated to University of Mumbai & MSBTE
+<p align="center">
+  <img src="docs/images/sjcem-next-dashboard.png" alt="SJCEM NEXT — Student Management Information System Dashboard" width="100%" />
+</p>
+
+<p align="center">
+  <em>SJCEM NEXT — Student Management Information System</em><br>
+  <sub>A modern student and college management platform.</sub>
+</p>
+
+> **St. John College of Engineering and Management (SJCEM), Palghar, Maharashtra, India**  
+> Under the management of **ALDEL Education Trust**  
+> Autonomous | NAAC 'A+' Grade | NBA Accredited | Affiliated to University of Mumbai & MSBTE
 
 ---
 
