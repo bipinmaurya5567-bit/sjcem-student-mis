@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <title>SJCEM NEXT — Student MIS | St. John College of Engineering and Management</title>
+    <meta
+      name="description"
+      content="SJCEM NEXT is the modern, responsive Student Management Information System for St. John College of Engineering and Management (SJCEM), Palghar, Maharashtra under ALDEL Education Trust."
+    />
+    <meta name="theme-color" content="#247F73" />
+    <link rel="icon" type="image/png" href="public/assets/aldel-logo.png" />
+
+    <!-- Google Fonts: Inter and Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Local High-Performance Vendor Libraries (100% offline & instant) -->
+    <script src="public/vendor/tailwind.js"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              teal: {
+                50: '#F0F9F8',
+                100: '#D7F0EB',
+                200: '#B8E4DC',
+                300: '#8ACFCA',
+                400: '#56B4AE',
+                500: '#3A9B95',
+                600: '#2A827B',
+                700: '#247F73', // ALDEL primary teal
+                800: '#19685F', // ALDEL primary hover
+                900: '#144F49',
+                950: '#0B2F2C',
+              },
+              brand: {
+                primary: '#247F73',
+                hover: '#19685F',
+                emerald: '#4C9B89',
+                bg: '#F7F9FC',
+                text: '#172B3A',
+                secondary: '#64748B',
+                border: '#E2E8F0',
+              },
+            },
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+              display: ['Outfit', 'Inter', 'sans-serif'],
+            },
+          },
+        },
+      };
+    </script>
+    <script src="public/vendor/lucide.min.js"></script>
+    <script src="public/vendor/chart.umd.js"></script>
+    <script src="public/vendor/qrious.min.js"></script>
+    <script src="public/vendor/html5-qrcode.min.js"></script>
+
+    <!-- Custom Design Tokens & Aesthetics -->
+    <link rel="stylesheet" href="src/styles/main.css" />
+  </head>
+  <body class="bg-[#F7F9FC] text-[#172B3A] antialiased selection:bg-teal-100 selection:text-teal-900">
+    <!-- Main Application Container -->
+    <div id="app">
+      <!-- Splash Loading State -->
+      <div class="min-h-screen flex flex-col items-center justify-center p-4">
+        <div class="flex items-center space-x-3 mb-4">
+          <img src="public/assets/aldel-logo.png" alt="Aldel Logo" class="h-12 w-auto animate-pulse" />
+        </div>
+        <div class="w-8 h-8 border-3 border-teal-800 border-t-transparent rounded-full animate-spin"></div>
+        <p class="text-xs text-slate-500 font-semibold mt-3">Loading SJCEM NEXT Academic Portal...</p>
+      </div>
+    </div>
+
+    <!-- Application Script (ES Module) -->
+    <script type="module" src="src/app.js"></script>
+  </body>
+</html>
