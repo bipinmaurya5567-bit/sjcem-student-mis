@@ -1,7 +1,7 @@
 // SJCEM NEXT MIS Sidebar Navigation Component
 import { misStore } from '../../services/store.js';
 
-export function renderSidebar(currentRoute, onNavigate, isCollapsed, onToggleCollapse) {
+export function renderSidebar(currentRoute, onNavigate, isCollapsed, _onToggleCollapse) {
   const user = misStore.getCurrentUser();
   const unreadNotices = misStore.getNotices().filter((n) => !n.isRead).length;
   const pendingRequests = misStore.getCertificates().filter((c) => c.status === 'UNDER_REVIEW' || c.status === 'SUBMITTED').length;
@@ -28,6 +28,7 @@ export function renderSidebar(currentRoute, onNavigate, isCollapsed, onToggleCol
   // Faculty Navigation Items
   const facultyNavItems = [
     { id: 'faculty-workspace', label: 'Faculty Dashboard', icon: 'layout-dashboard' },
+    { id: 'student-lookup', label: 'Student Data Lookup', icon: 'search' },
     { id: 'attendance-entry', label: 'Class Attendance', icon: 'calendar-check', badge: 'Action' },
     { id: 'marks-entry', label: 'IA Marks Submission', icon: 'file-spreadsheet' },
     { id: 'timetable', label: 'Teaching Timetable', icon: 'clock' },
@@ -40,6 +41,7 @@ export function renderSidebar(currentRoute, onNavigate, isCollapsed, onToggleCol
   // Administrator Navigation Items
   const adminNavItems = [
     { id: 'admin-workspace', label: 'Admin Dashboard', icon: 'shield-check' },
+    { id: 'student-lookup', label: 'Student Data Lookup', icon: 'search' },
     { id: 'admin-certificates', label: 'Certificate Approvals', icon: 'file-badge-2', badge: pendingRequests },
     { id: 'timetable', label: 'Timetable Oversight', icon: 'clock' },
     { id: 'notices', label: 'Notice Management', icon: 'bell' },
@@ -65,7 +67,7 @@ export function renderSidebar(currentRoute, onNavigate, isCollapsed, onToggleCol
             class="h-10 w-auto object-contain flex-shrink-0"
             onerror="this.style.display='none'; document.getElementById('logo-fallback').style.display='flex';"
           />
-          <div id="logo-fallback" style="display:none;" class="h-9 w-9 rounded-lg bg-teal-800 text-white font-bold flex items-center justify-center text-sm">
+          <div id="logo-fallback" style="display:none;" class="h-9 w-9 rounded-lg bg-[#073B70] text-white font-bold flex items-center justify-center text-sm">
             A
           </div>
           ${
@@ -73,10 +75,10 @@ export function renderSidebar(currentRoute, onNavigate, isCollapsed, onToggleCol
               ? `
             <div class="flex flex-col">
               <span class="font-bold text-sm text-slate-800 tracking-tight flex items-center gap-1.5">
-                SJCEM NEXT
-                <span class="px-1.5 py-0.2 bg-teal-50 text-teal-800 text-[10px] rounded font-semibold border border-teal-200">v2.4</span>
+                Student MIS
+                <span class="px-1.5 py-0.2 bg-[#F0F4FA] text-[#073B70] text-[10px] rounded font-semibold border border-[#DCE4EE]">v2.4</span>
               </span>
-              <span class="text-[11px] text-slate-500 font-medium truncate max-w-[130px]">Student MIS • Palghar</span>
+              <span class="text-[11px] text-slate-500 font-medium truncate max-w-[130px]">SJCEM • Palghar</span>
             </div>
           `
               : ''
@@ -107,8 +109,8 @@ export function renderSidebar(currentRoute, onNavigate, isCollapsed, onToggleCol
           .map((item) => {
             const isActive = currentRoute === item.id;
             const activeClass = isActive
-              ? 'bg-[#247F73] text-white shadow-sm font-semibold'
-              : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900 font-medium';
+              ? 'bg-[#073B70] text-white shadow-sm font-semibold'
+              : 'text-slate-700 hover:bg-[#F0F4FA] hover:text-[#073B70] font-medium';
 
             return `
             <button

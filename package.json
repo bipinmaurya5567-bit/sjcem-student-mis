@@ -1,13 +1,17 @@
 {
-  "name": "sjcem-next-mis",
+  "name": "sjcem-student-mis",
   "private": true,
   "version": "2.4.0",
-  "description": "SJCEM NEXT — Modern Student Management Information System for St. John College of Engineering and Management, Palghar",
+  "description": "SJCEM Student MIS — Modern Management Information System for St. John College of Engineering and Management, Palghar",
   "type": "module",
   "scripts": {
-    "dev": "python -m http.server 5173",
-    "start": "python -m http.server 5173",
-    "preview": "python -m http.server 5173"
+    "dev": "node server/server.js",
+    "start": "node server/server.js",
+    "preview": "node server/server.js",
+    "typecheck": "tsc --build",
+    "lint": "npx oxlint --ignore-pattern \"public/**\"",
+    "build": "tsc --build && node test_identity_isolation.mjs && node test_student_retrieval.mjs && vite build && node scripts/postbuild.mjs",
+    "test": "node test_identity_isolation.mjs && node test_student_retrieval.mjs"
   },
   "keywords": [
     "sjcem",
@@ -16,5 +20,13 @@
     "college-mis",
     "palghar"
   ],
-  "author": "St. John College of Engineering and Management"
+  "author": "St. John College of Engineering and Management",
+  "devDependencies": {
+    "@types/node": "^26.6.5",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.1.2",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.5"
+  }
 }

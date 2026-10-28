@@ -3,6 +3,7 @@ import { misStore } from '../../services/store.js';
 
 export function renderActionModals() {
   const user = misStore.getCurrentUser();
+  if (!user) return "";
   const attendance = misStore.getAttendance();
 
   return `
@@ -288,7 +289,7 @@ export function renderActionModals() {
         </div>
 
         <div class="my-4 max-h-96 overflow-y-auto bg-slate-900 text-slate-100 rounded-xl p-4 font-mono text-xs leading-relaxed">
-          <pre><code>-- SJCEM NEXT MIS Relational Schema Excerpt
+          <pre><code>-- Student MIS Relational Schema Excerpt
 -- Location: supabase/migrations/20261023_sjcem_schema.sql
 
 CREATE TABLE profiles (
@@ -320,11 +321,47 @@ CREATE POLICY "Students can view own attendance"
 CREATE POLICY "Faculty can record attendance"
     ON attendance_records FOR INSERT
     WITH CHECK (auth_user_has_role('faculty') OR auth_user_has_role('admin'));
+
+-- Migration: 20261024_student_retrieval_and_import_schema.sql
+CREATE TABLE imported_student_records (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    pid VARCHAR(50) UNIQUE NOT NULL,
+    prn VARCHAR(30) UNIQUE NOT NULL,
+    roll_number VARCHAR(20) NOT NULL,
+    first_name VARCHAR(100) NOT NULL,
+    last_name VARCHAR(100) NOT NULL,
+    department_code VARCHAR(20) NOT NULL,
+    program_name VARCHAR(255) NOT NULL,
+    current_semester INT NOT NULL,
+    status VARCHAR(30) DEFAULT 'ACTIVE',
+    attendance_details JSONB,
+    ia_marks JSONB,
+    semester_results JSONB,
+    source_type VARCHAR(50) DEFAULT 'CSV_IMPORT'
+);
+
+ALTER TABLE imported_student_records ENABLE ROW LEVEL SECURITY;
+
+-- Faculty can only access student records within their assigned department
+CREATE POLICY "Faculty department isolation for student lookup"
+    ON imported_student_records FOR SELECT
+    USING (auth_user_has_role('admin') OR (auth_user_has_role('faculty') AND department_code = auth_user_department_code()));
+
+-- Immutable Security Audit Trail for All Student Queries
+CREATE TABLE student_lookup_audit_logs (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    actor_id UUID REFERENCES profiles(id),
+    queried_pid VARCHAR(50) NOT NULL,
+    lookup_result VARCHAR(50) NOT NULL, -- 'SUCCESS', 'NOT_FOUND', 'ACCESS_DENIED'
+    student_department VARCHAR(50),
+    ip_address VARCHAR(50),
+    created_at TIMESTAMPTZ DEFAULT NOW()
+);
           </code></pre>
         </div>
 
         <div class="flex justify-between items-center pt-2 text-xs">
-          <span class="text-slate-400">File: supabase/migrations/20261023_sjcem_schema.sql</span>
+          <span class="text-slate-400">Migrations: 20261023_sjcem_schema.sql & 20261024_student_retrieval_and_import_schema.sql</span>
           <button onclick="window.appToast('Schema SQL copied to clipboard', 'success')" class="px-4 py-2 rounded-xl bg-purple-700 hover:bg-purple-800 text-white font-semibold">
             Copy Full SQL
           </button>
@@ -453,7 +490,7 @@ CREATE POLICY "Faculty can record attendance"
 
             <!-- Sample Test Tokens for Verification Assessment -->
             <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 space-y-2">
-              <span class="text-[10px] font-bold text-slate-600 uppercase tracking-wider block">One-Click Demonstration Test Tokens:</span>
+              <span class="text-[10px] font-bold text-slate-600 uppercase tracking-wider block">Institutional Verification Test Tokens:</span>
               <div class="grid grid-cols-2 gap-1.5 text-[11px]">
                 <button
                   type="button"
@@ -580,6 +617,281 @@ CREATE POLICY "Faculty can record attendance"
             <button type="submit" class="px-4 py-2 rounded-xl bg-rose-700 hover:bg-rose-800 text-white font-bold shadow-md">Revoke & Re-issue Token</button>
           </div>
         </form>
+      </div>
+    </div>
+    <!-- 9. Notice Viewer Modal -->
+    <div id="modal-view-notice" style="display:none;" class="fixed inset-0 z-50 modal-backdrop overflow-y-auto flex items-center justify-center p-4">
+      <div class="bg-white rounded-2xl shadow-2xl max-w-lg w-full border border-slate-200 overflow-hidden animate-fade-in">
+        <div class="p-5 border-b border-[#DCE4EE] flex items-center justify-between bg-gradient-to-r from-[#073B70] to-[#062B50] text-white">
+          <div class="flex items-center space-x-2.5">
+            <div class="h-8 w-8 bg-white rounded-lg p-1 shadow-sm flex items-center justify-center flex-shrink-0">
+              <img src="public/assets/aldel-logo.png" alt="ALDEL" class="h-full w-full object-contain" />
+            </div>
+            <div>
+              <h3 id="notice-modal-title" class="font-bold text-sm text-white">Official Circular</h3>
+              <p id="notice-modal-meta" class="text-[10px] text-blue-200 font-medium">SJCEM Administration</p>
+            </div>
+          </div>
+          <button onclick="window.appCloseModal('modal-view-notice')" class="text-white/80 hover:text-white p-1 rounded-lg hover:bg-white/10 transition">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+        <div class="p-6 space-y-4 text-xs text-[#18263A]">
+          <div class="flex items-center gap-2">
+            <span id="notice-modal-category" class="px-2 py-0.5 rounded font-bold text-[10px] bg-[#F0F4FA] text-[#073B70] border border-[#DCE4EE]">ACADEMIC</span>
+            <span id="notice-modal-priority" class="px-2 py-0.5 rounded font-bold text-[10px] bg-amber-50 text-amber-800 border border-amber-200">NORMAL</span>
+            <span id="notice-modal-date" class="ml-auto text-[11px] text-slate-500 font-mono">Date</span>
+          </div>
+          <div id="notice-modal-content" class="leading-relaxed whitespace-pre-line text-slate-700 bg-slate-50/70 p-4 rounded-xl border border-slate-100"></div>
+          <div id="notice-modal-attachment" style="display:none;" class="p-3 bg-blue-50/70 border border-blue-200 rounded-xl flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+              <i data-lucide="paperclip" class="w-4 h-4 text-[#073B70]"></i>
+              <span id="notice-modal-attachment-name" class="font-mono text-[11px] font-semibold text-[#073B70]">attachment.pdf</span>
+            </div>
+            <button onclick="window.appDownloadNoticeAttachment(document.getElementById('notice-modal-attachment-name').innerText)" class="px-3 py-1 bg-[#073B70] text-white rounded-lg font-bold text-[10px] hover:bg-[#062B50] transition">
+              Download
+            </button>
+          </div>
+        </div>
+        <div class="p-4 bg-slate-50 border-t border-[#DCE4EE] flex justify-end">
+          <button type="button" onclick="window.appCloseModal('modal-view-notice')" class="px-4 py-2 rounded-xl bg-slate-200 hover:bg-slate-300 text-slate-800 font-semibold text-xs transition">
+            Close Circular
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 10. Create Notice Modal (Faculty & Admin) -->
+    <div id="modal-create-notice" style="display:none;" class="fixed inset-0 z-50 modal-backdrop overflow-y-auto flex items-center justify-center p-4">
+      <div class="bg-white rounded-2xl shadow-2xl max-w-lg w-full border border-slate-200 overflow-hidden animate-fade-in">
+        <div class="p-5 border-b border-[#DCE4EE] flex items-center justify-between bg-gradient-to-r from-[#073B70] to-[#062B50] text-white">
+          <div class="flex items-center space-x-2">
+            <i data-lucide="bell-plus" class="w-5 h-5 text-white"></i>
+            <h3 class="font-bold text-sm text-white">Publish Institutional Circular</h3>
+          </div>
+          <button onclick="window.appCloseModal('modal-create-notice')" class="text-white/80 hover:text-white">
+            <i data-lucide="x" class="w-4 h-4"></i>
+          </button>
+        </div>
+        <form onsubmit="window.appHandleCreateNoticeSubmit(event)" class="p-5 space-y-3.5 text-xs">
+          <div>
+            <label class="block text-slate-700 font-bold mb-1">Circular Title</label>
+            <input id="create-notice-title" type="text" required placeholder="e.g. Commencement of In-Semester Assessment II (AY 2025–26)" class="w-full px-3 py-2 rounded-xl border border-slate-300 focus:outline-none focus:border-[#073B70]" />
+          </div>
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block text-slate-700 font-bold mb-1">Category</label>
+              <select id="create-notice-category" class="w-full px-3 py-2 rounded-xl border border-slate-300 font-semibold text-slate-800 focus:outline-none focus:border-[#073B70]">
+                <option value="ACADEMIC">Academic</option>
+                <option value="EXAMINATION">Examination</option>
+                <option value="EVENTS">Events & Activities</option>
+                <option value="ADMINISTRATIVE">Administrative</option>
+                <option value="PLACEMENT">Training & Placement</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-slate-700 font-bold mb-1">Priority</label>
+              <select id="create-notice-priority" class="w-full px-3 py-2 rounded-xl border border-slate-300 font-semibold text-slate-800 focus:outline-none focus:border-[#073B70]">
+                <option value="NORMAL">Normal</option>
+                <option value="IMPORTANT">Important</option>
+                <option value="URGENT">Urgent Alert</option>
+              </select>
+            </div>
+          </div>
+          <div>
+            <label class="block text-slate-700 font-bold mb-1">Circular Details & Instructions</label>
+            <textarea id="create-notice-content" rows="4" required placeholder="Type the complete circular text, timetable schedule, or examination instructions..." class="w-full px-3 py-2 rounded-xl border border-slate-300 focus:outline-none focus:border-[#073B70]"></textarea>
+          </div>
+          <div class="pt-2 flex justify-end gap-2">
+            <button type="button" onclick="window.appCloseModal('modal-create-notice')" class="px-4 py-2 rounded-xl bg-slate-100 text-slate-700 font-semibold">Cancel</button>
+            <button type="submit" class="px-4 py-2 rounded-xl bg-[#073B70] hover:bg-[#062B50] text-white font-semibold">Publish Notice</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- 11. Upload Study Resource Modal (Faculty) -->
+    <div id="modal-upload-resource" style="display:none;" class="fixed inset-0 z-50 modal-backdrop overflow-y-auto flex items-center justify-center p-4">
+      <div class="bg-white rounded-2xl shadow-2xl max-w-lg w-full border border-slate-200 overflow-hidden animate-fade-in">
+        <div class="p-5 border-b border-[#DCE4EE] flex items-center justify-between bg-gradient-to-r from-[#073B70] to-[#062B50] text-white">
+          <div class="flex items-center space-x-2">
+            <i data-lucide="book-open" class="w-5 h-5 text-white"></i>
+            <h3 class="font-bold text-sm text-white">Upload Subject Study Resource</h3>
+          </div>
+          <button onclick="window.appCloseModal('modal-upload-resource')" class="text-white/80 hover:text-white">
+            <i data-lucide="x" class="w-4 h-4"></i>
+          </button>
+        </div>
+        <form onsubmit="window.appHandleUploadResourceSubmit(event)" class="p-5 space-y-3.5 text-xs">
+          <div>
+            <label class="block text-slate-700 font-bold mb-1">Subject / Course</label>
+            <input id="upload-resource-subject" type="text" required placeholder="e.g. CSC601 - Cloud Computing & Virtualization" class="w-full px-3 py-2 rounded-xl border border-slate-300 focus:outline-none focus:border-[#073B70]" />
+          </div>
+          <div>
+            <label class="block text-slate-700 font-bold mb-1">Resource Title</label>
+            <input id="upload-resource-title" type="text" required placeholder="e.g. Module 3: Virtual Machine Provisioning Lab Manual" class="w-full px-3 py-2 rounded-xl border border-slate-300 focus:outline-none focus:border-[#073B70]" />
+          </div>
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block text-slate-700 font-bold mb-1">Resource Type</label>
+              <select id="upload-resource-type" class="w-full px-3 py-2 rounded-xl border border-slate-300 font-semibold text-slate-800 focus:outline-none focus:border-[#073B70]">
+                <option value="NOTES">Lecture Notes</option>
+                <option value="LAB_MANUAL">Lab Manual</option>
+                <option value="QUESTION_PAPER">Question Paper Bank</option>
+                <option value="SYLLABUS">Course Syllabus</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-slate-700 font-bold mb-1">File Format</label>
+              <select id="upload-resource-format" class="w-full px-3 py-2 rounded-xl border border-slate-300 font-semibold text-slate-800 focus:outline-none focus:border-[#073B70]">
+                <option value="PDF">PDF Document</option>
+                <option value="ZIP">ZIP Archive</option>
+                <option value="DOCX">Word Document (DOCX)</option>
+              </select>
+            </div>
+          </div>
+          <div class="border-2 border-dashed border-slate-200 rounded-xl p-4 text-center">
+            <i data-lucide="upload-cloud" class="w-6 h-6 mx-auto mb-1 text-slate-400"></i>
+            <span class="text-slate-600 font-medium block">Select File from Computer</span>
+            <span class="text-[10px] text-slate-400 font-mono">Max size 25 MB</span>
+          </div>
+          <div class="pt-2 flex justify-end gap-2">
+            <button type="button" onclick="window.appCloseModal('modal-upload-resource')" class="px-4 py-2 rounded-xl bg-slate-100 text-slate-700 font-semibold">Cancel</button>
+            <button type="submit" class="px-4 py-2 rounded-xl bg-[#073B70] hover:bg-[#062B50] text-white font-semibold">Upload Resource</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- 12. Create Support Ticket Modal -->
+    <div id="modal-new-ticket" style="display:none;" class="fixed inset-0 z-50 modal-backdrop overflow-y-auto flex items-center justify-center p-4">
+      <div class="bg-white rounded-2xl shadow-2xl max-w-lg w-full border border-slate-200 overflow-hidden animate-fade-in">
+        <div class="p-5 border-b border-[#DCE4EE] flex items-center justify-between bg-gradient-to-r from-[#073B70] to-[#062B50] text-white">
+          <div class="flex items-center space-x-2">
+            <i data-lucide="help-circle" class="w-5 h-5 text-white"></i>
+            <h3 class="font-bold text-sm text-white">Submit Campus Helpdesk Ticket</h3>
+          </div>
+          <button onclick="window.appCloseModal('modal-new-ticket')" class="text-white/80 hover:text-white">
+            <i data-lucide="x" class="w-4 h-4"></i>
+          </button>
+        </div>
+        <form onsubmit="window.appHandleNewTicketSubmit(event)" class="p-5 space-y-3.5 text-xs">
+          <div>
+            <label class="block text-slate-700 font-bold mb-1">Subject / Query</label>
+            <input id="ticket-subject" type="text" required placeholder="e.g. In-Semester assessment score discrepancy in CSC602" class="w-full px-3 py-2 rounded-xl border border-slate-300 focus:outline-none focus:border-[#073B70]" />
+          </div>
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block text-slate-700 font-bold mb-1">Category</label>
+              <select id="ticket-category" class="w-full px-3 py-2 rounded-xl border border-slate-300 font-semibold text-slate-800 focus:outline-none focus:border-[#073B70]">
+                <option value="Academic">Academic Office</option>
+                <option value="Attendance">Attendance Correction</option>
+                <option value="Examination">Examination Cell</option>
+                <option value="IT Systems">MIS Portal / Account</option>
+                <option value="Library">Central Library</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-slate-700 font-bold mb-1">Priority</label>
+              <select id="ticket-priority" class="w-full px-3 py-2 rounded-xl border border-slate-300 font-semibold text-slate-800 focus:outline-none focus:border-[#073B70]">
+                <option value="NORMAL">Normal</option>
+                <option value="HIGH">High Priority</option>
+                <option value="URGENT">Urgent (Deadline within 24h)</option>
+              </select>
+            </div>
+          </div>
+          <div>
+            <label class="block text-slate-700 font-bold mb-1">Detailed Description</label>
+            <textarea id="ticket-description" rows="3" required placeholder="Provide relevant details such as subject code, date, lecture slot, or screenshot reference..." class="w-full px-3 py-2 rounded-xl border border-slate-300 focus:outline-none focus:border-[#073B70]"></textarea>
+          </div>
+          <div class="pt-2 flex justify-end gap-2">
+            <button type="button" onclick="window.appCloseModal('modal-new-ticket')" class="px-4 py-2 rounded-xl bg-slate-100 text-slate-700 font-semibold">Cancel</button>
+            <button type="submit" class="px-4 py-2 rounded-xl bg-[#073B70] hover:bg-[#062B50] text-white font-semibold">Submit Ticket</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- 13. Preview Official Grade Card Modal -->
+    <div id="modal-preview-grade-card" style="display:none;" class="fixed inset-0 z-50 modal-backdrop overflow-y-auto flex items-center justify-center p-4">
+      <div class="bg-white rounded-2xl shadow-2xl max-w-2xl w-full border border-slate-200 overflow-hidden animate-fade-in">
+        <div class="p-4 border-b border-[#DCE4EE] flex items-center justify-between bg-gradient-to-r from-[#073B70] to-[#062B50] text-white">
+          <div class="flex items-center space-x-2">
+            <i data-lucide="award" class="w-5 h-5 text-white"></i>
+            <h3 class="font-bold text-sm text-white">Official Semester Marksheet & Transcript Preview</h3>
+          </div>
+          <div class="flex items-center space-x-2">
+            <button onclick="window.print()" class="px-3 py-1 bg-white text-[#073B70] font-bold rounded-lg text-xs hover:bg-slate-100 transition flex items-center gap-1">
+              <i data-lucide="printer" class="w-3.5 h-3.5"></i>
+              <span>Print Marksheet</span>
+            </button>
+            <button onclick="window.appCloseModal('modal-preview-grade-card')" class="text-white/80 hover:text-white p-1">
+              <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+          </div>
+        </div>
+        <div id="grade-card-body" class="p-6 space-y-4 text-xs text-[#18263A] max-h-[75vh] overflow-y-auto">
+          <!-- Populated dynamically by window.appPreviewGradeCard -->
+        </div>
+      </div>
+    </div>
+
+    <!-- 14. Request Tracking Detail Modal -->
+    <div id="modal-view-request-detail" style="display:none;" class="fixed inset-0 z-50 modal-backdrop overflow-y-auto flex items-center justify-center p-4">
+      <div class="bg-white rounded-2xl shadow-2xl max-w-lg w-full border border-slate-200 overflow-hidden animate-fade-in">
+        <div class="p-5 border-b border-[#DCE4EE] flex items-center justify-between bg-gradient-to-r from-[#073B70] to-[#062B50] text-white">
+          <div class="flex items-center space-x-2">
+            <i data-lucide="file-check" class="w-5 h-5 text-white"></i>
+            <h3 class="font-bold text-sm text-white">Request Lifecycle & Timeline</h3>
+          </div>
+          <button onclick="window.appCloseModal('modal-view-request-detail')" class="text-white/80 hover:text-white">
+            <i data-lucide="x" class="w-4 h-4"></i>
+          </button>
+        </div>
+        <div id="request-detail-body" class="p-6 space-y-4 text-xs text-[#18263A]">
+          <!-- Populated dynamically by window.appViewRequestDetail -->
+        </div>
+        <div class="p-4 bg-slate-50 border-t border-[#DCE4EE] flex justify-end">
+          <button type="button" onclick="window.appCloseModal('modal-view-request-detail')" class="px-4 py-2 rounded-xl bg-slate-200 hover:bg-slate-300 text-slate-800 font-semibold text-xs transition">
+            Close Tracking
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 15. Admin Certificate Review Modal -->
+    <div id="modal-admin-cert-review" style="display:none;" class="fixed inset-0 z-50 modal-backdrop overflow-y-auto flex items-center justify-center p-4">
+      <div class="bg-white rounded-2xl shadow-2xl max-w-lg w-full border border-slate-200 overflow-hidden animate-fade-in">
+        <div class="p-5 border-b border-[#DCE4EE] flex items-center justify-between bg-gradient-to-r from-purple-900 to-indigo-900 text-white">
+          <div class="flex items-center space-x-2">
+            <i data-lucide="file-badge-2" class="w-5 h-5 text-purple-200"></i>
+            <h3 class="font-bold text-sm text-white">Review Student Certificate Application</h3>
+          </div>
+          <button onclick="window.appCloseModal('modal-admin-cert-review')" class="text-white/80 hover:text-white">
+            <i data-lucide="x" class="w-4 h-4"></i>
+          </button>
+        </div>
+        <div id="admin-cert-review-body" class="p-6 space-y-4 text-xs text-[#18263A]">
+          <!-- Populated dynamically by window.appOpenAdminCertificateReview -->
+        </div>
+      </div>
+    </div>
+
+    <!-- 16. Faculty Project Deliverable Review Modal -->
+    <div id="modal-faculty-project-review" style="display:none;" class="fixed inset-0 z-50 modal-backdrop overflow-y-auto flex items-center justify-center p-4">
+      <div class="bg-white rounded-2xl shadow-2xl max-w-lg w-full border border-slate-200 overflow-hidden animate-fade-in">
+        <div class="p-5 border-b border-[#DCE4EE] flex items-center justify-between bg-gradient-to-r from-teal-900 to-[#178579] text-white">
+          <div class="flex items-center space-x-2">
+            <i data-lucide="folder-check" class="w-5 h-5 text-teal-200"></i>
+            <h3 class="font-bold text-sm text-white">Review Capstone Project Submission</h3>
+          </div>
+          <button onclick="window.appCloseModal('modal-faculty-project-review')" class="text-white/80 hover:text-white">
+            <i data-lucide="x" class="w-4 h-4"></i>
+          </button>
+        </div>
+        <div id="faculty-project-review-body" class="p-6 space-y-4 text-xs text-[#18263A]">
+          <!-- Populated dynamically by window.appOpenFacultyReviewProjectModal -->
+        </div>
       </div>
     </div>
   `;

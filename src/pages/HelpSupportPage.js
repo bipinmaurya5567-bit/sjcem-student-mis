@@ -16,7 +16,7 @@ export function renderHelpSupportPage() {
     },
     {
       q: 'What is the processing turnaround time for a Bonafide Certificate?',
-      a: 'Standard Bonafide requests submitted online through SJCEM NEXT are verified within 2 to 3 working days by the Student Section and authenticated by the Registrar and Principal.',
+      a: 'Standard Bonafide requests submitted online through Student MIS are verified within 2 to 3 working days by the Student Section and authenticated by the Registrar and Principal.',
     },
     {
       q: 'How do I submit my Capstone Project deliverables?',

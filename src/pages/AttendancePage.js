@@ -79,7 +79,7 @@ export function renderAttendancePage(filterSubject = 'ALL', filterStatus = 'ALL'
           <span class="text-xs text-slate-400 font-medium">B.E. Computer Engg • Sem 6</span>
         </div>
 
-        <div class="overflow-x-auto">
+        <div class="overflow-x-auto table-scroll-container">
           <table class="w-full text-left text-xs">
             <thead>
               <tr class="bg-slate-50 border-y border-slate-200 text-slate-500 uppercase font-semibold text-[11px]">
@@ -170,7 +170,7 @@ export function renderAttendancePage(filterSubject = 'ALL', filterStatus = 'ALL'
         </div>
 
         <!-- Logs Table -->
-        <div class="overflow-x-auto">
+        <div class="overflow-x-auto table-scroll-container">
           <table class="w-full text-left text-xs">
             <thead>
               <tr class="bg-slate-50 border-y border-slate-200 text-slate-500 uppercase font-semibold text-[11px]">

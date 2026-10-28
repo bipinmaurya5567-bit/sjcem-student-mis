@@ -123,7 +123,7 @@ export function renderRequestsPage(filterStatus = 'ALL', searchQuery = '') {
 
       <!-- Unified Requests Table -->
       <div class="card-subtle p-5 md:p-6 space-y-4">
-        <div class="overflow-x-auto">
+        <div class="overflow-x-auto table-scroll-container">
           <table class="w-full text-left text-xs">
             <thead>
               <tr class="bg-slate-50 border-y border-slate-200 text-slate-500 uppercase font-semibold text-[10px]">

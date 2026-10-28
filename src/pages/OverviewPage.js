@@ -3,9 +3,17 @@ import { misStore } from '../services/store.js';
 
 export function renderOverviewPage() {
   const user = misStore.getCurrentUser();
+  if (!user || user.role !== 'student') {
+    return `
+      <div class="card-subtle p-8 text-center text-slate-500 space-y-3">
+        <i data-lucide="shield-alert" class="w-10 h-10 text-rose-600 mx-auto"></i>
+        <h3 class="text-base font-bold text-slate-800">Student Dashboard Access Required</h3>
+        <p class="text-xs text-slate-600">The current session is not authenticated as an enrolled student.</p>
+      </div>
+    `;
+  }
   const overallAtt = misStore.getOverallAttendance();
   const todayClasses = misStore.getTodayClasses();
-  const internalMarks = misStore.getInternalMarks();
   const notices = misStore.getNotices();
   const certificates = misStore.getCertificates();
   const unreadNotices = notices.filter((n) => !n.isRead);
@@ -24,7 +32,7 @@ export function renderOverviewPage() {
   return `
     <div class="space-y-6 animate-fade-in pb-12">
       <!-- 1. Personalized Welcome Header Banner -->
-      <div class="card-subtle bg-gradient-to-r from-teal-900 via-teal-800 to-[#19685F] text-white p-6 md:p-8 rounded-2xl relative overflow-hidden shadow-md">
+      <div class="card-subtle bg-gradient-to-r from-[#073B70] via-[#0E447E] to-[#062B50] text-white p-6 md:p-8 rounded-2xl relative overflow-hidden shadow-md">
         <!-- Background decorative pattern -->
         <div class="absolute -right-10 -bottom-10 w-64 h-64 rounded-full bg-white/5 pointer-events-none"></div>
         <div class="absolute right-32 -top-12 w-48 h-48 rounded-full bg-teal-400/10 pointer-events-none"></div>

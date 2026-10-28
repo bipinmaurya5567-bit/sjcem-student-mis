@@ -1,5 +1,6 @@
 // SJCEM NEXT MIS — High-Security Multi-Role Authentication & Verification Views
 import { DEMO_USERS } from '../data/mockDatabase.js';
+import { renderPortalSelectionCard, PORTAL_CARDS } from '../components/PortalSelectionCard.js';
 
 /**
  * Landing Page at /login
@@ -7,10 +8,10 @@ import { DEMO_USERS } from '../data/mockDatabase.js';
  */
 export function renderLoginLandingPage() {
   return `
-    <div class="min-h-screen bg-gradient-to-b from-slate-50 via-teal-50/20 to-slate-100 flex flex-col justify-between animate-fade-in text-slate-800">
+    <div class="min-h-screen bg-[#F4F7FB] flex flex-col justify-between animate-fade-in text-[#18263A]">
       
       <!-- Full SJCEM Institutional Banner Header -->
-      <header class="w-full bg-white border-b-2 border-blue-900 shadow-sm">
+      <header class="w-full bg-white border-b-2 border-[#073B70] shadow-sm">
         <!-- Primary College Identity Bar -->
         <div class="bg-white px-3 sm:px-8 py-2.5 sm:py-3 flex items-center justify-between max-w-7xl mx-auto gap-2">
           <!-- Left: SJCEM College Crest -->
@@ -25,7 +26,7 @@ export function renderLoginLandingPage() {
 
           <!-- Center: Full Institutional Text (matches official letterhead) -->
           <div class="flex-1 text-center px-1.5 sm:px-3">
-            <h1 class="text-xs sm:text-2xl lg:text-3xl font-extrabold text-blue-900 leading-tight tracking-tight font-display">
+            <h1 class="text-xs sm:text-2xl lg:text-3xl font-extrabold text-[#073B70] leading-tight tracking-tight font-display">
               ST. JOHN COLLEGE OF ENGINEERING &amp; MANAGEMENT
             </h1>
             <p class="text-[9px] sm:text-sm font-semibold text-slate-700 mt-0.5">
@@ -35,9 +36,9 @@ export function renderLoginLandingPage() {
               Approved by AICTE &nbsp;• &nbsp;Recognised by DTE &nbsp;• &nbsp;Affiliated to University of Mumbai, MSBTE
             </p>
             <div class="flex items-center justify-center gap-2 sm:gap-3 mt-0.5 sm:mt-1">
-              <span class="text-[9px] sm:text-sm font-extrabold text-red-600">NAAC 'A+' Grade</span>
+              <span class="text-[9px] sm:text-sm font-extrabold text-[#C62828]">NAAC 'A+' Grade</span>
               <span class="text-slate-300">|</span>
-              <span class="text-[9px] sm:text-sm font-bold text-red-600">NBA Accredited</span>
+              <span class="text-[9px] sm:text-sm font-bold text-[#C62828]">NBA Accredited</span>
             </div>
           </div>
 
@@ -53,10 +54,10 @@ export function renderLoginLandingPage() {
         </div>
 
         <!-- Secondary Action Bar -->
-        <div class="bg-blue-900 px-4 sm:px-8 py-1.5 flex items-center justify-between">
+        <div class="bg-[#073B70] px-4 sm:px-8 py-1.5 flex items-center justify-between">
           <div class="flex items-center space-x-1.5 text-white">
             <i data-lucide="shield-check" class="w-3.5 h-3.5 text-blue-200"></i>
-            <span class="text-[11px] font-semibold tracking-wide">SJCEM NEXT — Secure Academic Portal</span>
+            <span class="text-[11px] font-semibold tracking-wide">Student MIS — Secure Academic Portal</span>
           </div>
           <div class="flex items-center space-x-3">
             <button
@@ -67,10 +68,6 @@ export function renderLoginLandingPage() {
               <i data-lucide="scan-line" class="w-3.5 h-3.5"></i>
               <span class="hidden sm:inline">Verify Digital ID</span>
             </button>
-            <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-400/20 text-amber-200 border border-amber-400/30">
-              <span class="w-1.5 h-1.5 rounded-full bg-amber-400 mr-1.5 animate-pulse"></span>
-              Demo Mode
-            </span>
           </div>
         </div>
       </header>
@@ -80,16 +77,16 @@ export function renderLoginLandingPage() {
         
         <!-- Header Text -->
         <div class="text-center max-w-2xl mx-auto mb-10 sm:mb-12">
-          <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-teal-100/70 border border-teal-200 text-teal-900 text-xs font-semibold mb-4">
-            <i data-lucide="shield-check" class="w-3.5 h-3.5 text-teal-700"></i>
-            <span>SJCEM NEXT Security Architecture</span>
+          <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-[#F0F4FA] border border-[#DCE4EE] text-[#073B70] text-xs font-semibold mb-4">
+            <i data-lucide="shield-check" class="w-3.5 h-3.5 text-[#073B70]"></i>
+            <span>Student MIS Security Architecture</span>
           </div>
 
           <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
-            Welcome to <span class="text-teal-800">SJCEM NEXT</span>
+            Welcome to <span class="text-[#073B70]">Student MIS</span>
           </h1>
           <p class="text-base sm:text-lg font-semibold text-slate-700 mt-2">
-            Student Management Information System
+            St. John College of Engineering and Management, Palghar
           </p>
           <p class="text-sm text-slate-500 mt-1 italic">
             "Your academics. Your campus. One secure portal."
@@ -99,164 +96,12 @@ export function renderLoginLandingPage() {
           </p>
         </div>
 
-        <!-- Exactly Three Prominent Role Cards -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 max-w-5xl mx-auto w-full">
-          
-          <!-- Card 1: Student Login -->
-          <div class="bg-white rounded-2xl border-2 border-slate-200/90 hover:border-teal-600 transition-all duration-200 p-6 sm:p-7 shadow-sm hover:shadow-xl flex flex-col justify-between group relative overflow-hidden">
-            <div class="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-teal-500 to-emerald-500"></div>
-            
-            <div>
-              <div class="w-12 h-12 rounded-xl bg-teal-50 text-teal-700 border border-teal-200 flex items-center justify-center mb-5 group-hover:scale-105 group-hover:bg-teal-700 group-hover:text-white transition-all">
-                <i data-lucide="graduation-cap" class="w-6 h-6"></i>
-              </div>
-
-              <div class="flex items-center justify-between mb-2">
-                <h3 class="text-lg font-bold text-slate-900">Student Portal</h3>
-                <span class="text-[11px] font-bold text-teal-700 bg-teal-50 px-2 py-0.5 rounded-md border border-teal-200">Enrolled</span>
-              </div>
-
-              <p class="text-xs text-slate-600 leading-relaxed mb-6">
-                Access attendance, timetable, internal marks, results, projects, and student services.
-              </p>
-            </div>
-
-            <div>
-              <button
-                onclick="window.appNavigate('login-student')"
-                class="w-full py-2.5 px-4 rounded-xl bg-teal-800 hover:bg-teal-900 text-white font-bold text-xs shadow-md hover:shadow-teal-900/20 transition flex items-center justify-center space-x-2"
-              >
-                <span>Continue as Student</span>
-                <i data-lucide="arrow-right" class="w-4 h-4"></i>
-              </button>
-              <div class="mt-3 text-center">
-                <span class="text-[11px] text-slate-400">Requires verified @sjcem.edu.in email</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Card 2: Faculty Login -->
-          <div class="bg-white rounded-2xl border-2 border-slate-200/90 hover:border-teal-600 transition-all duration-200 p-6 sm:p-7 shadow-sm hover:shadow-xl flex flex-col justify-between group relative overflow-hidden">
-            <div class="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-emerald-600 to-teal-700"></div>
-
-            <div>
-              <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-800 border border-emerald-200 flex items-center justify-center mb-5 group-hover:scale-105 group-hover:bg-emerald-800 group-hover:text-white transition-all">
-                <i data-lucide="briefcase" class="w-6 h-6"></i>
-              </div>
-
-              <div class="flex items-center justify-between mb-2">
-                <h3 class="text-lg font-bold text-slate-900">Faculty Portal</h3>
-                <span class="text-[11px] font-bold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200">Staff</span>
-              </div>
-
-              <p class="text-xs text-slate-600 leading-relaxed mb-6">
-                Manage assigned classes, attendance, assessments, notices, and student projects.
-              </p>
-            </div>
-
-            <div>
-              <button
-                onclick="window.appNavigate('login-faculty')"
-                class="w-full py-2.5 px-4 rounded-xl bg-slate-900 hover:bg-black text-white font-bold text-xs shadow-md transition flex items-center justify-center space-x-2"
-              >
-                <span>Continue as Faculty</span>
-                <i data-lucide="arrow-right" class="w-4 h-4"></i>
-              </button>
-              <div class="mt-3 text-center">
-                <span class="text-[11px] text-slate-400">Institutional faculty credentials required</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Card 3: Administrator Login -->
-          <div class="bg-white rounded-2xl border-2 border-slate-200/90 hover:border-teal-600 transition-all duration-200 p-6 sm:p-7 shadow-sm hover:shadow-xl flex flex-col justify-between group relative overflow-hidden">
-            <div class="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-teal-700 to-slate-900"></div>
-
-            <div>
-              <div class="w-12 h-12 rounded-xl bg-slate-100 text-slate-800 border border-slate-300 flex items-center justify-center mb-5 group-hover:scale-105 group-hover:bg-slate-900 group-hover:text-white transition-all">
-                <i data-lucide="shield-check" class="w-6 h-6"></i>
-              </div>
-
-              <div class="flex items-center justify-between mb-2">
-                <h3 class="text-lg font-bold text-slate-900">Administration Portal</h3>
-                <span class="text-[11px] font-bold text-slate-700 bg-slate-100 px-2 py-0.5 rounded-md border border-slate-200">Executive</span>
-              </div>
-
-              <p class="text-xs text-slate-600 leading-relaxed mb-6">
-                Manage authorized institutional operations, users, academic records, requests, and system configuration.
-              </p>
-            </div>
-
-            <div>
-              <button
-                onclick="window.appNavigate('login-admin')"
-                class="w-full py-2.5 px-4 rounded-xl bg-teal-900 hover:bg-teal-950 text-white font-bold text-xs shadow-md transition flex items-center justify-center space-x-2"
-              >
-                <span>Continue as Administrator</span>
-                <i data-lucide="arrow-right" class="w-4 h-4"></i>
-              </button>
-              <div class="mt-3 text-center">
-                <span class="text-[11px] text-slate-400">Authorized administrative role verification required</span>
-              </div>
-            </div>
-          </div>
-
+        <!-- Exactly Three Prominent Role Cards: Shared PortalSelectionCard Component -->
+        <div class="portal-card-grid">
+          ${PORTAL_CARDS.map((cardConfig, index) => renderPortalSelectionCard(cardConfig, index)).join('')}
         </div>
 
-        <!-- Demo Environment Credentials Card (For testing and development) -->
-        <div class="mt-12 bg-white/90 backdrop-blur rounded-xl border border-slate-200 p-5 max-w-4xl mx-auto shadow-sm">
-          <div class="flex items-center justify-between mb-3 border-b border-slate-100 pb-2">
-            <div class="flex items-center space-x-2">
-              <i data-lucide="key-round" class="w-4 h-4 text-teal-700"></i>
-              <span class="text-xs font-bold text-slate-800 uppercase tracking-wide">Documented Demonstration Accounts (Non-Production)</span>
-            </div>
-            <span class="text-[11px] text-slate-500">All passwords: <code class="font-mono bg-slate-100 px-1.5 py-0.5 rounded font-bold text-slate-700">DemoSecurePass2026!</code></span>
-          </div>
 
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
-            <div class="p-2.5 rounded-lg bg-teal-50/50 border border-teal-100 flex flex-col justify-between">
-              <div>
-                <span class="font-bold text-teal-900 block">Student Demo</span>
-                <span class="font-mono text-[11px] text-slate-600 break-all">${DEMO_USERS.student.email}</span>
-              </div>
-              <button
-                onclick="window.appQuickFillLogin('student')"
-                class="mt-2 text-[11px] text-left font-bold text-teal-800 hover:text-teal-950 flex items-center space-x-1"
-              >
-                <span>Open Student Login</span>
-                <i data-lucide="arrow-right" class="w-3 h-3"></i>
-              </button>
-            </div>
-
-            <div class="p-2.5 rounded-lg bg-emerald-50/50 border border-emerald-100 flex flex-col justify-between">
-              <div>
-                <span class="font-bold text-emerald-950 block">Faculty Demo</span>
-                <span class="font-mono text-[11px] text-slate-600 break-all">${DEMO_USERS.faculty.email}</span>
-              </div>
-              <button
-                onclick="window.appQuickFillLogin('faculty')"
-                class="mt-2 text-[11px] text-left font-bold text-emerald-900 hover:text-emerald-950 flex items-center space-x-1"
-              >
-                <span>Open Faculty Login</span>
-                <i data-lucide="arrow-right" class="w-3 h-3"></i>
-              </button>
-            </div>
-
-            <div class="p-2.5 rounded-lg bg-slate-50 border border-slate-200 flex flex-col justify-between">
-              <div>
-                <span class="font-bold text-slate-900 block">Administrator Demo</span>
-                <span class="font-mono text-[11px] text-slate-600 break-all">${DEMO_USERS.admin.email}</span>
-              </div>
-              <button
-                onclick="window.appQuickFillLogin('admin')"
-                class="mt-2 text-[11px] text-left font-bold text-slate-900 hover:text-black flex items-center space-x-1"
-              >
-                <span>Open Admin Login</span>
-                <i data-lucide="arrow-right" class="w-3 h-3"></i>
-              </button>
-            </div>
-          </div>
-        </div>
 
       </main>
 
@@ -290,9 +135,9 @@ export function renderDedicatedLoginPage(role = 'student', errorMessage = '', pe
     student: {
       title: 'Student Portal',
       badge: 'Enrolled Student',
-      badgeClass: 'bg-teal-50 text-teal-800 border-teal-200',
+      badgeClass: 'bg-[#F0F4FA] text-[#073B70] border-[#DCE4EE]',
       icon: 'graduation-cap',
-      accentColor: 'teal',
+      accentColor: 'navy',
       defaultEmail: DEMO_USERS.student.email,
       defaultPassword: DEMO_USERS.student.password || 'DemoSecurePass2026!',
       sampleName: `${DEMO_USERS.student.firstName} ${DEMO_USERS.student.lastName}`,
@@ -300,9 +145,9 @@ export function renderDedicatedLoginPage(role = 'student', errorMessage = '', pe
     faculty: {
       title: 'Faculty Portal',
       badge: 'Academic Staff',
-      badgeClass: 'bg-emerald-50 text-emerald-800 border-emerald-200',
+      badgeClass: 'bg-blue-50 text-blue-900 border-blue-200',
       icon: 'briefcase',
-      accentColor: 'emerald',
+      accentColor: 'blue',
       defaultEmail: DEMO_USERS.faculty.email,
       defaultPassword: DEMO_USERS.faculty.password || 'DemoSecurePass2026!',
       sampleName: `${DEMO_USERS.faculty.firstName} ${DEMO_USERS.faculty.lastName}`,
@@ -310,9 +155,9 @@ export function renderDedicatedLoginPage(role = 'student', errorMessage = '', pe
     admin: {
       title: 'Administration Portal',
       badge: 'Authorized Administrator',
-      badgeClass: 'bg-slate-100 text-slate-800 border-slate-300',
+      badgeClass: 'bg-purple-50 text-purple-900 border-purple-200',
       icon: 'shield-check',
-      accentColor: 'slate',
+      accentColor: 'purple',
       defaultEmail: DEMO_USERS.admin.email,
       defaultPassword: DEMO_USERS.admin.password || 'DemoSecurePass2026!',
       sampleName: `${DEMO_USERS.admin.firstName} ${DEMO_USERS.admin.lastName}`,
@@ -322,7 +167,7 @@ export function renderDedicatedLoginPage(role = 'student', errorMessage = '', pe
     badge: 'Institutional',
     badgeClass: 'bg-slate-100 text-slate-800 border-slate-300',
     icon: 'user',
-    accentColor: 'teal',
+    accentColor: 'navy',
     defaultEmail: '',
     defaultPassword: '',
     sampleName: 'Authorized User',
@@ -380,7 +225,7 @@ export function renderDedicatedLoginPage(role = 'student', errorMessage = '', pe
 
           <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-xl border border-slate-200">
             <!-- Navigation and Step directly at the top of the login card -->
-            <div class="flex items-center justify-between pb-3.5 mb-5 border-b border-slate-100">
+            <div class="flex items-center justify-between flex-wrap gap-2 pb-3.5 mb-5 border-b border-slate-100">
               <button
                 type="button"
                 onclick="window.appNavigate('login')"
@@ -389,8 +234,8 @@ export function renderDedicatedLoginPage(role = 'student', errorMessage = '', pe
                 <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
                 <span>Back to Role Selection</span>
               </button>
-              <span class="text-xs text-slate-400 font-medium">
-                ${isOtpStep ? 'Step 2 of 2 — OTP' : 'Step 1 of 2'}
+              <span class="text-xs text-slate-500 font-medium flex items-center gap-1">
+                <span>${isOtpStep ? 'Step 2 of 2: Verification' : 'Step 1 of 2: Credentials'}</span>
               </span>
             </div>
 
@@ -425,7 +270,7 @@ export function renderDedicatedLoginPage(role = 'student', errorMessage = '', pe
                     autocomplete="email"
                     placeholder="user@sjcem.edu.in"
                     value="${roleConfig.defaultEmail}"
-                    class="w-full px-3.5 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-teal-700/20 focus:border-teal-700 text-slate-800 font-medium bg-white text-base sm:text-xs"
+                    class="w-full px-3.5 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#073B70]/20 focus:border-[#073B70] text-slate-800 font-medium bg-white text-base sm:text-xs"
                   />
                   <div class="absolute right-3 top-2.5 text-slate-400">
                     <i data-lucide="mail" class="w-4 h-4"></i>
@@ -440,7 +285,7 @@ export function renderDedicatedLoginPage(role = 'student', errorMessage = '', pe
                   <button
                     type="button"
                     onclick="window.appOpenForgotPassword()"
-                    class="text-teal-700 hover:text-teal-900 hover:underline font-semibold"
+                    class="text-[#073B70] hover:text-[#062B50] hover:underline font-semibold"
                   >
                     Forgot Password?
                   </button>
@@ -453,7 +298,7 @@ export function renderDedicatedLoginPage(role = 'student', errorMessage = '', pe
                     autocomplete="current-password"
                     placeholder="••••••••••••"
                     value="${roleConfig.defaultPassword}"
-                    class="w-full px-3.5 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-teal-700/20 focus:border-teal-700 text-slate-800 font-mono bg-white pr-10 text-base sm:text-xs"
+                    class="w-full px-3.5 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#073B70]/20 focus:border-[#073B70] text-slate-800 font-mono bg-white pr-10 text-base sm:text-xs"
                   />
                   <button
                     type="button"
@@ -466,14 +311,24 @@ export function renderDedicatedLoginPage(role = 'student', errorMessage = '', pe
                 </div>
               </div>
 
-              <div class="pt-2">
+              <div class="pt-2 space-y-2">
                 <button
                   type="submit"
                   id="login-submit-button"
-                  class="w-full py-3.5 sm:py-3 rounded-xl bg-teal-800 hover:bg-teal-900 active:scale-[0.99] text-white font-bold text-xs sm:text-sm shadow-md hover:shadow-teal-900/20 transition flex items-center justify-center space-x-2"
+                  class="w-full py-3.5 sm:py-3 rounded-xl bg-[#073B70] hover:bg-[#062B50] active:scale-[0.99] text-white font-bold text-xs sm:text-sm shadow-md hover:shadow-lg transition flex items-center justify-center space-x-2 cursor-pointer"
                 >
-                  <span>Continue to Email Verification</span>
-                  <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                  <i data-lucide="shield-check" class="w-4 h-4"></i>
+                  <span>Continue to Email Verification →</span>
+                </button>
+
+                <button
+                  type="button"
+                  id="direct-login-btn"
+                  onclick="window.appDirectLogin('${role}')"
+                  class="w-full py-2.5 rounded-xl border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700 font-semibold text-xs transition flex items-center justify-center space-x-1.5"
+                >
+                  <i data-lucide="zap" class="w-3.5 h-3.5 text-amber-500"></i>
+                  <span>One-Click Demo Access (${roleConfig.title})</span>
                 </button>
               </div>
             </form>
@@ -482,27 +337,27 @@ export function renderDedicatedLoginPage(role = 'student', errorMessage = '', pe
             <!-- STEP 2: Email OTP Challenge Verification -->
             <div class="space-y-4 text-xs">
               
-              <!-- Simulated Demo Email Inbox Banner -->
-              <div class="p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-950">
+              <!-- Development Sandbox Simulation Banner -->
+              <div class="p-3.5 rounded-xl bg-blue-50 border border-blue-200 text-blue-950">
                 <div class="flex items-center justify-between mb-1.5">
-                  <div class="flex items-center space-x-1.5 text-emerald-800 font-bold">
-                    <i data-lucide="mail-check" class="w-4 h-4 text-emerald-700"></i>
-                    <span>Simulated Email OTP Dispatched</span>
+                  <div class="flex items-center space-x-1.5 text-[#073B70] font-bold">
+                    <i data-lucide="mail-check" class="w-4 h-4 text-[#073B70]"></i>
+                    <span>Simulated Email OTP Verification</span>
                   </div>
-                  <span class="text-[10px] font-mono bg-emerald-200/70 text-emerald-900 px-1.5 py-0.5 rounded font-bold">Demo Delivery</span>
+                  <span class="text-[10px] font-mono bg-blue-100 text-[#073B70] px-1.5 py-0.5 rounded font-bold">Dev Sandbox</span>
                 </div>
-                <p class="text-[11px] text-emerald-900 leading-tight">
-                  A single-use verification code was sent to <strong class="font-mono">${pendingChallenge.email}</strong>.
+                <p class="text-[11px] text-slate-700 leading-tight">
+                  Development simulation: A single-use verification code has been generated for demo account <strong class="font-mono text-slate-900">${pendingChallenge.email}</strong>. (In production, codes are delivered via institutional SMTP).
                 </p>
-                <div class="mt-2.5 p-2 bg-white rounded-lg border border-emerald-300 flex items-center justify-between">
+                <div class="mt-2.5 p-2 bg-white rounded-lg border border-blue-200 flex items-center justify-between">
                   <div>
-                    <span class="text-[10px] text-slate-500 uppercase tracking-wider block">One-Time Code (Valid for 5 mins):</span>
-                    <span class="font-mono text-base font-extrabold tracking-widest text-teal-900">${pendingChallenge.otpCode}</span>
+                    <span class="text-[10px] text-slate-500 uppercase tracking-wider block">Demo Code (Valid for 5 mins):</span>
+                    <span class="font-mono text-base font-extrabold tracking-widest text-[#073B70]">${pendingChallenge.otpCode}</span>
                   </div>
                   <button
                     type="button"
                     onclick="document.getElementById('login-otp-input').value = '${pendingChallenge.otpCode}';"
-                    class="px-2.5 py-1 text-[11px] bg-emerald-700 hover:bg-emerald-800 text-white font-bold rounded transition"
+                    class="px-2.5 py-1 text-[11px] bg-[#073B70] hover:bg-[#062B50] text-white font-bold rounded transition"
                   >
                     Auto-Fill Code
                   </button>
@@ -523,7 +378,7 @@ export function renderDedicatedLoginPage(role = 'student', errorMessage = '', pe
                     required
                     autofocus
                     placeholder="••••••"
-                    class="w-full text-center text-2xl font-mono tracking-[0.5em] px-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-teal-700/20 focus:border-teal-700 text-slate-900 font-bold bg-white"
+                    class="w-full text-center text-2xl font-mono tracking-[0.5em] px-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#073B70]/20 focus:border-[#073B70] text-slate-900 font-bold bg-white"
                   />
                   <p class="text-[11px] text-slate-400 text-center mt-1.5">
                     Check your institutional inbox for the one-time code.
@@ -533,7 +388,7 @@ export function renderDedicatedLoginPage(role = 'student', errorMessage = '', pe
                 <div class="pt-2 space-y-2">
                   <button
                     type="submit"
-                    class="w-full py-2.5 rounded-xl bg-teal-800 hover:bg-teal-900 text-white font-bold text-xs shadow-md hover:shadow-teal-900/20 transition flex items-center justify-center space-x-2"
+                    class="w-full py-2.5 rounded-xl bg-[#073B70] hover:bg-[#062B50] text-white font-bold text-xs shadow-md transition flex items-center justify-center space-x-2"
                   >
                     <i data-lucide="shield-check" class="w-4 h-4"></i>
                     <span>Verify Code & Sign In</span>
@@ -543,7 +398,7 @@ export function renderDedicatedLoginPage(role = 'student', errorMessage = '', pe
                     <button
                       type="button"
                       onclick="window.appResendOtp()"
-                      class="text-teal-700 hover:text-teal-900 font-semibold flex items-center space-x-1"
+                      class="text-[#073B70] hover:text-[#062B50] font-semibold flex items-center space-x-1"
                     >
                       <i data-lucide="refresh-cw" class="w-3 h-3"></i>
                       <span>Resend Verification Code</span>
@@ -562,34 +417,15 @@ export function renderDedicatedLoginPage(role = 'student', errorMessage = '', pe
           `
           }
 
-          <!-- Demonstration Account Notice for Evaluators -->
-          <div class="mt-6 pt-5 border-t border-slate-100 text-[11px] text-slate-500">
-            <div class="flex items-center justify-between mb-1.5">
-              <span class="font-bold text-slate-700 uppercase tracking-wider text-[10px]">Verified Demonstration Account</span>
-              <span class="text-[10px] text-teal-800 font-semibold">Pre-Configured</span>
-            </div>
-            <div class="p-2.5 rounded-lg bg-slate-50 border border-slate-200 flex items-center justify-between">
-              <div>
-                <p class="font-semibold text-slate-800">${roleConfig.sampleName}</p>
-                <p class="font-mono text-[10px] text-slate-500">${roleConfig.defaultEmail}</p>
-              </div>
-              <button
-                type="button"
-                onclick="window.appAutoFillCredentials('${roleConfig.defaultEmail}', '${roleConfig.defaultPassword}')"
-                class="px-3 py-1.5 text-[10px] font-bold bg-teal-700 hover:bg-teal-800 border border-teal-600 text-white rounded-lg transition flex items-center gap-1"
-              >
-                <i data-lucide="zap" class="w-3 h-3"></i>
-                Insert Demo
-              </button>
-            </div>
-          </div>
+
 
         </div>
 
         <!-- Security footer -->
         <p class="text-center text-[11px] text-slate-400 mt-5 flex items-center justify-center gap-1.5">
-          <i data-lucide="lock" class="w-3.5 h-3.5 text-teal-700"></i>
+          <i data-lucide="lock" class="w-3.5 h-3.5 text-[#073B70]"></i>
           <span>Secure Session • Cryptographic Row-Level Security</span>
+        </p>• Cryptographic Row-Level Security</span>
         </p>
       </div>
       </main>
@@ -633,7 +469,7 @@ export function renderVerificationViewPage(token, result, isScanning = false) {
       ? 'This QR identity has been officially revoked or reported compromised. A newly generated credential is required.'
       : result && result.status === 'EXPIRED'
       ? 'This digital identity token has expired. The student or faculty member must refresh their credential.'
-      : 'The scanned token does not match any verified record in the SJCEM NEXT Academic Registry.';
+      : 'The scanned token does not match any verified record in the Student MIS Academic Registry.';
 
     return `
       <div class="min-h-screen bg-slate-50 flex flex-col justify-center items-center p-4">
@@ -686,7 +522,7 @@ export function renderVerificationViewPage(token, result, isScanning = false) {
             alt="ALDEL Education Trust"
             class="h-9 w-auto object-contain flex-shrink-0"
           />
-          <span class="text-xs font-bold text-teal-900 uppercase">SJCEM NEXT Verification</span>
+          <span class="text-xs font-bold text-teal-900 uppercase">Student MIS Verification</span>
         </div>
         <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold ${
           isPrivileged ? 'bg-emerald-100 text-emerald-800 border border-emerald-300' : 'bg-slate-100 text-slate-700 border border-slate-200'

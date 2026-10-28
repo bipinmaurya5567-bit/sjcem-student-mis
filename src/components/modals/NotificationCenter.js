@@ -6,6 +6,7 @@ export function renderNotificationCenter() {
   const unreadCount = misStore.getUnreadNotificationCount();
 
   return `
+    <div id="notification-backdrop" style="display:none;" class="fixed inset-0 z-40 bg-slate-900/40 backdrop-blur-sm" onclick="window.appToggleNotifications(false)"></div>
     <div
       id="notification-center-drawer"
       style="display:none;"

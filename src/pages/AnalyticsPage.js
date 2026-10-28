@@ -2,9 +2,6 @@
 import { misStore } from '../services/store.js';
 
 export function renderAnalyticsPage() {
-  const attendance = misStore.getAttendance();
-  const semesterResults = misStore.getSemesterResults();
-  const internalMarks = misStore.getInternalMarks();
   const overall = misStore.getOverallAttendance();
 
   return `

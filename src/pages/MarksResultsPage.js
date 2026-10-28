@@ -4,7 +4,6 @@ import { misStore } from '../services/store.js';
 export function renderMarksResultsPage(activeTab = 'internal') {
   const internalMarks = misStore.getInternalMarks();
   const semesterResults = misStore.getSemesterResults();
-  const user = misStore.getCurrentUser();
 
   return `
     <div class="space-y-6 animate-fade-in pb-12">
@@ -58,7 +57,7 @@ export function renderMarksResultsPage(activeTab = 'internal') {
             </span>
           </div>
 
-          <div class="overflow-x-auto">
+          <div class="overflow-x-auto table-scroll-container">
             <table class="w-full text-left text-xs">
               <thead>
                 <tr class="bg-slate-50 border-y border-slate-200 text-slate-500 uppercase font-semibold text-[11px]">
@@ -153,7 +152,7 @@ export function renderMarksResultsPage(activeTab = 'internal') {
                 </div>
 
                 <!-- Courses Table -->
-                <div class="overflow-x-auto">
+                <div class="overflow-x-auto table-scroll-container">
                   <table class="w-full text-left text-xs">
                     <thead>
                       <tr class="bg-slate-50 border-y border-slate-200 text-slate-500 uppercase font-semibold text-[10px]">

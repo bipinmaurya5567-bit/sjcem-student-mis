@@ -18,7 +18,15 @@ export interface UserProfile {
   guardianPhone?: string;
   guardianRelation?: string;
   emergencyContact?: string;
+  auth_user_id?: string;
+  fullName?: string;
+  name?: string;
+  institutional_id?: string;
+  password?: string;
+  status?: string;
   // Student-specific
+  studentId?: string;
+  pid?: string;
   prn?: string;
   rollNumber?: string;
   department?: string;
@@ -28,9 +36,18 @@ export interface UserProfile {
   admissionYear?: number;
   academicAdvisor?: string;
   // Faculty-specific
+  facultyId?: string;
   designation?: string;
   departmentCode?: string;
   employeeId?: string;
+  // Admin-specific
+  adminId?: string;
+  // QR fields
+  qrToken?: string;
+  qrTokenCreated?: string;
+  qrTokenExpires?: string;
+  isQrRevoked?: boolean;
+  qrScanCount?: number;
 }
 
 export interface AttendanceRecord {
@@ -213,4 +230,155 @@ export interface AuditLogItem {
   entityName: string;
   details: string;
   ipAddress: string;
+}
+
+export interface QrRegistryItem {
+  token: string;
+  userId: string;
+  userType: 'Student' | 'Faculty' | 'Admin';
+  fullName: string;
+  department: string;
+  departmentCode?: string;
+  designation?: string;
+  program?: string;
+  semester?: number;
+  division?: string;
+  rollNumber?: string;
+  institutional_id?: string;
+  studentId?: string;
+  facultyId?: string;
+  adminId?: string;
+  employeeId?: string;
+  pid?: string;
+  prn?: string;
+  academicYear?: string;
+  advisor?: string;
+  institutionalEmail?: string;
+  isRevoked: boolean;
+  revokedAt?: string | null;
+  revokedReason?: string | null;
+  isExpired: boolean;
+  expiresAt: string;
+  createdAt: string;
+  scanCount: number;
+  avatarUrl?: string;
+  role?: string;
+  status?: string;
+  verificationUrl?: string;
+}
+
+export interface ImportedStudentSubjectBreakdown {
+  subjectCode: string;
+  subjectName: string;
+  attended: number;
+  conducted: number;
+  percentage: number;
+}
+
+export interface ImportedStudentAttendance {
+  percentage: number;
+  status: 'SAFE' | 'WARNING' | 'CRITICAL';
+  totalAttended: number;
+  totalConducted: number;
+  subjectBreakdown: ImportedStudentSubjectBreakdown[];
+}
+
+export interface ImportedStudentIaMark {
+  subjectCode: string;
+  subjectName: string;
+  ia1: number;
+  ia2: number;
+  average: number;
+  maxMarks: number;
+}
+
+export interface ImportedStudentSemesterResult {
+  semester: number;
+  examSeatNo: string;
+  sgpa: number;
+  cgpa: number;
+  totalCredits: number;
+  status: string;
+  publishedDate: string;
+}
+
+export interface ImportedStudent {
+  id?: string;
+  studentId: string;
+  pid: string;
+  prn: string;
+  rollNumber: string;
+  firstName: string;
+  middleName?: string;
+  lastName: string;
+  fullName?: string;
+  email?: string;
+  departmentCode: string;
+  department: string;
+  program: string;
+  admissionYear: number;
+  academicYear: string;
+  semester: number;
+  division: string;
+  status: string;
+  academicAdvisor: string;
+  attendance: ImportedStudentAttendance;
+  iaMarks: ImportedStudentIaMark[];
+  semesterResults: ImportedStudentSemesterResult[];
+  isSeedRecord?: boolean;
+  sourceType?: string;
+  lastSyncTimestamp?: string;
+}
+
+export interface IntegrationConfig {
+  serviceKey: string;
+  serviceName: string;
+  integrationMode: 'LOCAL_IMPORTED' | 'AUTHORIZED_API' | 'HYBRID';
+  apiEndpointUrl: string;
+  apiTimeoutMs: number;
+  rateLimitPerMin: number;
+  isActive: boolean;
+  healthStatus: string;
+  lastHealthCheck: string;
+  lastSyncTimestamp: string;
+  externalPortalUrl: string;
+  inspectionNotes: string;
+}
+
+export interface StudentLookupAuditLog {
+  id: string;
+  timestamp: string;
+  actorName: string;
+  actorRole: string;
+  actorDepartment: string;
+  queriedPid: string;
+  lookupResult: 'SUCCESS' | 'ACCESS_DENIED' | 'STUDENT_NOT_FOUND' | 'RATE_LIMITED' | 'ERROR';
+  studentDepartment?: string;
+  details: string;
+  ipAddress: string;
+}
+
+export interface PortalCardTheme {
+  accentBarClass: string;
+  hoverBorderClass: string;
+  iconBgClass: string;
+  iconTextClass: string;
+  iconBorderClass: string;
+  iconHoverClass: string;
+  badgeClass: string;
+  primaryBtnClass: string;
+  focusRingClass?: string;
+}
+
+export interface PortalCardConfig {
+  role: UserRole;
+  title: string;
+  statusLabel: string;
+  icon: string;
+  description: string;
+  primaryButtonLabel: string;
+  demoButtonLabel: string;
+  helperText: string;
+  targetRoute: string;
+  theme: PortalCardTheme;
 }

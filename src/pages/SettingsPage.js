@@ -16,7 +16,7 @@ export function renderSettingsPage() {
             </span>
           </div>
           <p class="text-xs md:text-sm text-slate-500">
-            Manage your authenticated session credentials, multi-factor authentication, and notification triggers.
+            Manage your authenticated session credentials, multi-factor authentication, and notification triggers for <span class="font-semibold text-slate-700">${user?.email || 'current session'}</span>.
           </p>
         </div>
       </div>

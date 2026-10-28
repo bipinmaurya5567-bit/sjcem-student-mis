@@ -1,14 +1,30 @@
-// SJCEM NEXT MIS AI Student Assistant ("SJCEM Campus AI")
 import { misStore } from '../services/store.js';
+
+function getInitialGreeting() {
+  const user = misStore.getCurrentUser();
+  const firstName = user?.name ? user.name.split(' ')[0] : 'there';
+  return `Hello ${firstName}! I am **SJCEM Campus AI**, your personal academic copilot. I am connected to your authenticated records at St. John College of Engineering and Management.\n\nAsk me about your attendance, today's schedule, Mumbai University circulars, or how to submit certificate and project requests!`;
+}
 
 let assistantChatMessages = [
   {
     id: 'msg-0',
     sender: 'assistant',
-    text: `Hello Rahul! I am **SJCEM Campus AI**, your personal academic copilot. I am connected to your authenticated records at St. John College of Engineering and Management.\n\nAsk me about your attendance, today's schedule, Mumbai University circulars, or how to submit certificate and project requests!`,
+    text: getInitialGreeting(),
     timestamp: 'Just now',
   },
 ];
+
+export function resetAiChat() {
+  assistantChatMessages = [
+    {
+      id: 'msg-0',
+      sender: 'assistant',
+      text: getInitialGreeting(),
+      timestamp: 'Just now',
+    },
+  ];
+}
 
 export function getAiChatMessages() {
   return assistantChatMessages;
@@ -34,7 +50,7 @@ export function renderAiAssistantPage() {
   ];
 
   return `
-    <div class="h-[calc(100vh-130px)] flex flex-col card-subtle bg-white overflow-hidden animate-fade-in border-slate-200">
+    <div class="h-[calc(100vh-185px)] md:h-[calc(100vh-140px)] flex flex-col card-subtle bg-white overflow-hidden animate-fade-in border-slate-200">
       <!-- Assistant Header -->
       <div class="p-4 border-b border-slate-200 bg-gradient-to-r from-teal-900 to-teal-800 text-white flex items-center justify-between flex-shrink-0">
         <div class="flex items-center space-x-3">
@@ -112,23 +128,23 @@ export function renderAiAssistantPage() {
       </div>
 
       <!-- Chat Input Field -->
-      <div class="p-3 md:p-4 bg-white border-t border-slate-200 flex-shrink-0">
-        <form onsubmit="window.appHandleAiSubmit(event)" class="flex items-center space-x-3">
+      <div class="p-2.5 sm:p-4 bg-white border-t border-slate-200 flex-shrink-0">
+        <form onsubmit="window.appHandleAiSubmit(event)" class="flex items-center space-x-2 sm:space-x-3">
           <input
             id="ai-user-input"
             type="text"
-            placeholder="Ask a question about your attendance, classes, notices, or certificates..."
-            class="flex-1 px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-slate-800 text-xs md:text-sm focus:outline-none focus:border-teal-700 focus:bg-white transition"
+            placeholder="Ask about attendance, schedule, notices..."
+            class="flex-1 px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-slate-800 text-xs sm:text-sm focus:outline-none focus:border-teal-700 focus:bg-white transition"
           />
           <button
             type="submit"
-            class="px-5 py-2.5 rounded-xl bg-teal-800 hover:bg-teal-900 text-white font-semibold text-xs md:text-sm shadow-sm transition flex items-center gap-2 flex-shrink-0"
+            class="px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-xl bg-teal-800 hover:bg-teal-900 text-white font-semibold text-xs sm:text-sm shadow-sm transition flex items-center gap-1.5 flex-shrink-0"
           >
-            <span>Send</span>
-            <i data-lucide="send" class="w-4 h-4"></i>
+            <span class="hidden sm:inline">Send</span>
+            <i data-lucide="send" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
           </button>
         </form>
-        <p class="text-[10px] text-slate-400 mt-2 text-center">
+        <p class="text-[9px] sm:text-[10px] text-slate-400 mt-1.5 text-center truncate">
           SJCEM Campus AI responses are grounded strictly in your verified records & University of Mumbai regulations.
         </p>
       </div>

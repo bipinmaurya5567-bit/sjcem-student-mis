@@ -5,7 +5,6 @@ export function renderBottomNav(currentRoute) {
   const user = misStore.getCurrentUser();
   if (!user) return '';
 
-  const unreadCount = misStore.getUnreadNotificationCount();
   const notices = misStore.getNotices();
   const unreadNoticesCount = notices.filter((n) => !n.isRead).length;
   const certificates = misStore.getCertificates();

@@ -1,17 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700&display=swap');
 
 :root {
-  --primary: #247F73;
-  --primary-hover: #19685F;
-  --secondary: #4C9B89;
-  --background: #F7F9FC;
+  --primary: #073B70;
+  --primary-hover: #0E447E;
+  --primary-deep: #062B50;
+  --secondary: #178579;
+  --background: #F4F7FB;
   --surface: #FFFFFF;
-  --text-main: #172B3A;
-  --text-secondary: #64748B;
-  --border: #E2E8F0;
+  --text-main: #18263A;
+  --text-secondary: #66758A;
+  --border: #DCE4EE;
+  --alert-red: #C62828;
   --success: #16A34A;
   --warning: #D97706;
-  --error: #DC2626;
+  --error: #C62828;
 }
 
 * {
@@ -40,31 +42,43 @@ h1, h2, h3, h4, .brand-font {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: #CBD5E1;
+  background: #BACADF;
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #94A3B8;
+  background: #8AA6C8;
 }
 
-/* Restrained Modern Card Shadows */
+/* Institutional Card Styling */
 .card-subtle {
   background-color: #FFFFFF;
-  border: 1px solid #E2E8F0;
+  border: 1px solid #DCE4EE;
   border-radius: 12px;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04), 0 1px 2px -1px rgba(0, 0, 0, 0.04);
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 1px 3px 0 rgba(7, 59, 112, 0.04), 0 1px 2px -1px rgba(7, 59, 112, 0.03);
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .card-subtle:hover {
-  border-color: #CBD5E1;
-  box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.06), 0 2px 6px -2px rgba(0, 0, 0, 0.04);
+  border-color: #BACADF;
+  box-shadow: 0 4px 12px -2px rgba(7, 59, 112, 0.08), 0 2px 6px -2px rgba(7, 59, 112, 0.04);
 }
 
-/* Badge helpers */
+/* Official Academic Badges */
+.badge-navy {
+  background-color: #F0F4FA;
+  color: #073B70;
+  border: 1px solid #DCE4EE;
+}
+
+.badge-red {
+  background-color: #FEF2F2;
+  color: #C62828;
+  border: 1px solid #FECACA;
+}
+
 .badge-teal {
-  background-color: #E6F5F2;
-  color: #19685F;
+  background-color: #F0F9F8;
+  color: #178579;
   border: 1px solid #B8E4DC;
 }
 
@@ -92,26 +106,42 @@ h1, h2, h3, h4, .brand-font {
   border: 1px solid #DBEAFE;
 }
 
-/* Animations */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(4px); }
-  to { opacity: 1; transform: translateY(0); }
+/* Motion System: 160-240ms subtle transition */
+@keyframes pageReveal {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .animate-fade-in {
-  animation: fadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: pageReveal 200ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Accessibility: Respect prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 /* Modal Backdrop */
 .modal-backdrop {
-  background-color: rgba(15, 23, 42, 0.45);
+  background-color: rgba(6, 43, 80, 0.45);
   backdrop-filter: blur(4px);
 }
 
 /* Digital ID Smart Card Styles */
 .id-card-pattern {
   background-color: #ffffff;
-  background-image: radial-gradient(#247F73 0.6px, transparent 0.6px), radial-gradient(#247F73 0.6px, #ffffff 0.6px);
+  background-image: radial-gradient(#073B70 0.6px, transparent 0.6px), radial-gradient(#073B70 0.6px, #ffffff 0.6px);
   background-size: 24px 24px;
   background-position: 0 0, 12px 12px;
   background-opacity: 0.03;
@@ -126,51 +156,143 @@ h1, h2, h3, h4, .brand-font {
   background: linear-gradient(135deg, rgba(255,255,255,0.4) 0%, rgba(36,127,115,0.2) 25%, rgba(14,165,233,0.2) 50%, rgba(217,119,6,0.2) 75%, rgba(255,255,255,0.4) 100%);
 }
 
-/* Dedicated Print Stylesheet for Official Digital ID Cards */
+/* ================= Dedicated Print Stylesheet for Official Digital ID Cards ================= */
 @media print {
-  body {
-    background: #ffffff !important;
-    color: #000000 !important;
+  @page {
+    size: A4 portrait;
+    margin: 12mm;
   }
 
-  /* Hide everything on page by default */
-  body * {
+  /* Force background colors, gradients, and graphic preservation */
+  *, *::before, *::after {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  html, body {
+    background: #ffffff !important;
+    color: #18263A !important;
+    height: auto !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    font-size: 12pt !important;
+  }
+
+  /* Relax flex/screen containers to regular block flow to prevent clipped or blank pages */
+  #app,
+  #app > div,
+  main,
+  .flex,
+  .h-screen,
+  .overflow-hidden,
+  .overflow-y-auto,
+  .max-w-7xl {
+    display: block !important;
+    height: auto !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+    position: static !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+  }
+
+  /* Hide interactive, navigational, and app-shell elements */
+  header,
+  aside,
+  nav,
+  button,
+  .bottom-nav,
+  #toast-container,
+  .modal-backdrop,
+  #mobile-sidebar-backdrop,
+  #mobile-sidebar-container,
+  .no-print,
+  [onclick*="appOpen"],
+  [onclick*="window.print"] {
+    display: none !important;
+  }
+
+  /* In default ID print mode, isolate #printable-id-card */
+  body:not(.print-grade-card-mode) * {
     visibility: hidden;
   }
 
-  /* Only show the dedicated printable ID card container */
-  #printable-id-card,
-  #printable-id-card * {
+  body:not(.print-grade-card-mode) #printable-id-card,
+  body:not(.print-grade-card-mode) #printable-id-card * {
     visibility: visible !important;
   }
 
+  /* Dedicated Printable Card Geometry & Standards */
   #printable-id-card {
-    position: absolute !important;
-    left: 50% !important;
-    top: 20mm !important;
-    transform: translateX(-50%) !important;
-    width: 86mm !important;
-    max-width: 86mm !important;
-    box-shadow: none !important;
-    border: 1px solid #cbd5e1 !important;
-    margin: 0 auto !important;
+    display: block !important;
+    position: relative !important;
+    left: auto !important;
+    top: auto !important;
+    transform: none !important;
+    margin: 8mm auto 15mm auto !important;
+    width: 95mm !important;
+    max-width: 95mm !important;
+    min-height: 140mm !important;
+    background: #ffffff !important;
+    border: 2px solid #073B70 !important;
+    border-radius: 12px !important;
+    box-shadow: 0 4px 14px rgba(7, 59, 112, 0.12) !important;
     page-break-inside: avoid !important;
+    break-inside: avoid !important;
+    page-break-after: avoid !important;
+    page-break-before: avoid !important;
+    overflow: hidden !important;
   }
 
-  header, aside, #toast-container, .modal-backdrop, button, nav {
-    display: none !important;
+  /* When printing semester grade cards in modal */
+  body.print-grade-card-mode * {
+    visibility: hidden;
+  }
+  body.print-grade-card-mode #printable-grade-card,
+  body.print-grade-card-mode #printable-grade-card * {
+    visibility: visible !important;
+  }
+  body.print-grade-card-mode #printable-grade-card {
+    position: relative !important;
+    margin: 0 auto !important;
+    width: 100% !important;
+    max-width: 190mm !important;
   }
 }
 
 /* ================= Mobile Ergonomics & Native Touch Polish ================= */
 html, body {
   -webkit-tap-highlight-color: transparent;
-  touch-action: manipulation;
-  overscroll-behavior-y: none;
+  width: 100%;
+  max-width: 100%;
+  min-width: 320px;
+  touch-action: pan-x pan-y;
+  overscroll-behavior-y: auto;
 }
 
-main, .overflow-y-auto, .overflow-x-auto {
-  -webkit-overflow-scrolling: touch;
+body.drawer-open {
+  overflow: hidden !important;
+}
+
+main, #app-main-scroll, .overflow-y-auto {
+  -webkit-overflow-scrolling: touch !important;
+  touch-action: pan-y !important;
+  overscroll-behavior-y: contain !important;
+}
+
+.overflow-x-auto, .table-scroll-container {
+  -webkit-overflow-scrolling: touch !important;
+  touch-action: pan-x pan-y !important;
+  overscroll-behavior: contain !important;
+}
+
+button, a, input, select, textarea {
+  touch-action: manipulation;
 }
 
 /* Prevent iOS Safari aggressive auto-zoom on input focus */
@@ -189,6 +311,56 @@ main, .overflow-y-auto, .overflow-x-auto {
   padding-top: max(1rem, env(safe-area-inset-top));
 }
 
+/* Responsive modal dialog containers */
+.modal-dialog-responsive {
+  max-height: calc(100dvh - 2rem);
+  max-height: calc(100vh - 2rem);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.modal-body-scrollable {
+  overflow-y: auto;
+  flex: 1 1 auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Ensure all modal dialogs fit on mobile viewports and scroll cleanly */
+.modal-backdrop > div {
+  max-height: calc(100dvh - 2rem);
+  max-height: calc(100vh - 2rem);
+  margin-top: auto;
+  margin-bottom: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-backdrop form {
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Touch targets min 44px */
+.touch-target-min {
+  min-height: 44px;
+  min-width: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Disable sticky hover states on touch-only devices */
+@media (hover: none) {
+  .card-subtle:hover {
+    box-shadow: 0 1px 3px 0 rgba(7, 59, 112, 0.04), 0 1px 2px -1px rgba(7, 59, 112, 0.03);
+    border-color: #DCE4EE;
+  }
+  .portal-selection-card:hover {
+    box-shadow: 0 1px 3px 0 rgba(7, 59, 112, 0.04), 0 1px 2px -1px rgba(7, 59, 112, 0.03);
+  }
+}
+
 /* Touch active micro-interaction */
 button:active, .card-subtle:active {
   transition: transform 0.08s ease;
@@ -205,6 +377,208 @@ button:active, .card-subtle:active {
 .table-scroll-container::-webkit-scrollbar-thumb {
   background: #CBD5E1;
   border-radius: 4px;
+}
+
+/* ================= Portal Selection Card Unified Grid & Alignment ================= */
+.portal-card-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 72rem;
+  margin-left: auto;
+  margin-right: auto;
+  align-items: stretch;
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .portal-card-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .portal-card-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.75rem;
+  }
+}
+
+/* Shared Portal Selection Card (100% height, strictly identical box-sizing) */
+.portal-selection-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 440px;
+  background-color: #ffffff;
+  border-radius: 1rem;
+  border: 2px solid rgba(226, 232, 240, 0.9);
+  padding: 1.5rem;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 1px 3px 0 rgba(7, 59, 112, 0.04), 0 1px 2px -1px rgba(7, 59, 112, 0.03);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  margin: 0 !important;
+  transform: none !important;
+  box-sizing: border-box;
+}
+
+@media (min-width: 640px) {
+  .portal-selection-card {
+    padding: 1.75rem;
+  }
+}
+
+.portal-selection-card:hover {
+  box-shadow: 0 20px 25px -5px rgba(7, 59, 112, 0.08), 0 8px 10px -6px rgba(7, 59, 112, 0.04);
+}
+
+/* Top Role Color Strip */
+.portal-card-accent-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+}
+
+/* 48x48px Icon Box */
+.portal-card-icon-wrapper {
+  width: 3rem;
+  height: 3rem;
+  min-width: 3rem;
+  min-height: 3rem;
+  border-radius: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.25rem;
+  border-width: 1px;
+  border-style: solid;
+  transition: all 0.2s ease;
+}
+
+/* Card Header: Title + Status Badge */
+.portal-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  min-height: 2.25rem;
+}
+
+.portal-card-title {
+  font-size: 1.0625rem;
+  font-weight: 700;
+  color: #0f172a;
+  line-height: 1.35;
+  margin: 0;
+  font-family: 'Outfit', 'Inter', sans-serif;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+
+.portal-card-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 0.15rem 0.5rem;
+  border-radius: 0.375rem;
+  border-width: 1px;
+  border-style: solid;
+  white-space: nowrap;
+  flex-shrink: 0;
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+}
+
+/* Description: Guaranteed reserved height so differing copy length never pushes buttons */
+.portal-card-desc {
+  font-size: 0.75rem;
+  line-height: 1.5;
+  color: #475569;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  min-height: 3.75rem;
+  display: flex;
+  align-items: flex-start;
+}
+
+/* Actions Area pinned to bottom */
+.portal-card-actions {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+/* Primary Button (44px height) */
+.portal-card-primary-btn {
+  width: 100%;
+  height: 2.75rem;
+  min-height: 2.75rem;
+  padding: 0 1rem;
+  border-radius: 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all 0.15s ease;
+  box-shadow: 0 2px 4px rgba(7, 59, 112, 0.12);
+  border: none;
+  cursor: pointer;
+}
+
+.portal-card-primary-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(7, 59, 112, 0.18);
+}
+
+.portal-card-primary-btn:active {
+  transform: translateY(0);
+}
+
+/* Secondary Demo Button (36px height) */
+.portal-card-demo-btn {
+  width: 100%;
+  height: 2.25rem;
+  min-height: 2.25rem;
+  padding: 0 0.75rem;
+  border-radius: 0.5rem;
+  font-size: 11px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.375rem;
+  transition: all 0.15s ease;
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  color: #334155;
+  cursor: pointer;
+}
+
+.portal-card-demo-btn:hover {
+  background-color: #f1f5f9;
+  color: #0f172a;
+  border-color: #cbd5e1;
+}
+
+/* Helper Text Container (32px reserved height) */
+.portal-card-helper {
+  margin-top: 0.5rem;
+  min-height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 11px;
+  color: #94a3b8;
+  line-height: 1.25;
 }
 
 

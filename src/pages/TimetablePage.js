@@ -86,7 +86,7 @@ export function renderTimetablePage(selectedDay = 5, viewMode = 'grid') {
         viewMode === 'grid'
           ? `
         <!-- Weekly Grid View -->
-        <div class="card-subtle p-5 md:p-6 overflow-x-auto">
+        <div class="card-subtle p-5 md:p-6 overflow-x-auto table-scroll-container">
           <div class="min-w-[850px]">
             <div class="grid grid-cols-6 gap-3 pb-3 border-b border-slate-200 text-center font-bold text-xs text-slate-700">
               ${days
@@ -160,7 +160,7 @@ export function renderTimetablePage(selectedDay = 5, viewMode = 'grid') {
               currentDaySlots.length === 0
                 ? '<div class="p-8 text-center text-slate-400 text-xs">No classes scheduled on this day.</div>'
                 : currentDaySlots
-                    .map((s, idx) => {
+                    .map((s) => {
                       const isLab = s.type === 'LAB';
                       return `
                 <div class="p-4 rounded-xl border border-slate-200 bg-slate-50/60 hover:bg-slate-50 flex flex-col sm:flex-row sm:items-center justify-between gap-4 transition">

@@ -104,7 +104,8 @@ export function queryCampusAi(prompt: string): Promise<string> {
       }
 
       // Default contextual response
-      let fallback = `Hello ${user.firstName}! I am your **SJCEM Campus AI Assistant**.\n\n`;
+      const greetingName = user ? user.firstName : 'Student';
+      let fallback = `Hello ${greetingName}! I am your **SJCEM Campus AI Assistant**.\n\n`;
       fallback += `I can assist you with:\n`;
       fallback += `• Checking your real-time subject-wise attendance and shortage alerts\n`;
       fallback += `• Showing your upcoming lectures, practical labs, and faculty locations\n`;

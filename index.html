@@ -2,13 +2,13 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-    <title>SJCEM NEXT — Student MIS | St. John College of Engineering and Management</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Student MIS — St. John College of Engineering and Management (SJCEM)</title>
     <meta
       name="description"
-      content="SJCEM NEXT is the modern, responsive Student Management Information System for St. John College of Engineering and Management (SJCEM), Palghar, Maharashtra under ALDEL Education Trust."
+      content="Student MIS is the modern, responsive Student Management Information System for St. John College of Engineering and Management (SJCEM), Palghar, Maharashtra under ALDEL Education Trust."
     />
-    <meta name="theme-color" content="#247F73" />
+    <meta name="theme-color" content="#073B70" />
     <link rel="icon" type="image/png" href="public/assets/aldel-logo.png" />
 
     <!-- Google Fonts: Inter and Outfit -->
@@ -26,6 +26,30 @@
         theme: {
           extend: {
             colors: {
+              navy: {
+                50: '#F0F4FA',
+                100: '#DCE4EE',
+                200: '#BACADF',
+                300: '#8AA6C8',
+                400: '#4C79AC',
+                500: '#1B5693',
+                600: '#0E447E',
+                700: '#073B70', // Official College Primary Navy
+                800: '#062B50', // Deep Institutional Navy
+                900: '#041E38',
+                950: '#021020',
+              },
+              brand: {
+                primary: '#073B70', // Primary institutional navy
+                deep: '#062B50',    // Deep navy
+                hover: '#0E447E',   // Navy hover
+                accent: '#178579',  // Supporting academic teal
+                red: '#C62828',     // Restrained alert red
+                bg: '#F4F7FB',      // Crisp light page background
+                border: '#DCE4EE',  // Clean subtle border
+                text: '#18263A',    // High-contrast primary text
+                secondary: '#66758A',// Muted academic text
+              },
               teal: {
                 50: '#F0F9F8',
                 100: '#D7F0EB',
@@ -34,19 +58,10 @@
                 400: '#56B4AE',
                 500: '#3A9B95',
                 600: '#2A827B',
-                700: '#247F73', // ALDEL primary teal
-                800: '#19685F', // ALDEL primary hover
-                900: '#144F49',
-                950: '#0B2F2C',
-              },
-              brand: {
-                primary: '#247F73',
-                hover: '#19685F',
-                emerald: '#4C9B89',
-                bg: '#F7F9FC',
-                text: '#172B3A',
-                secondary: '#64748B',
-                border: '#E2E8F0',
+                700: '#178579',
+                800: '#13675E',
+                900: '#0E4D46',
+                950: '#082E2A',
               },
             },
             fontFamily: {
@@ -61,11 +76,12 @@
     <script src="public/vendor/chart.umd.js"></script>
     <script src="public/vendor/qrious.min.js"></script>
     <script src="public/vendor/html5-qrcode.min.js"></script>
+    <script src="public/vendor/xlsx.mini.min.js"></script>
 
     <!-- Custom Design Tokens & Aesthetics -->
     <link rel="stylesheet" href="src/styles/main.css" />
   </head>
-  <body class="bg-[#F7F9FC] text-[#172B3A] antialiased selection:bg-teal-100 selection:text-teal-900">
+  <body class="bg-[#F4F7FB] text-[#18263A] antialiased selection:bg-blue-100 selection:text-blue-900">
     <!-- Main Application Container -->
     <div id="app">
       <!-- Splash Loading State -->
@@ -74,7 +90,7 @@
           <img src="public/assets/aldel-logo.png" alt="Aldel Logo" class="h-12 w-auto animate-pulse" />
         </div>
         <div class="w-8 h-8 border-3 border-teal-800 border-t-transparent rounded-full animate-spin"></div>
-        <p class="text-xs text-slate-500 font-semibold mt-3">Loading SJCEM NEXT Academic Portal...</p>
+        <p class="text-xs text-slate-500 font-semibold mt-3">Loading Student MIS Portal...</p>
       </div>
     </div>
 
